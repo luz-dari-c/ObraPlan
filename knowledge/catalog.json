@@ -1,0 +1,687 @@
+{
+  "nodes": [
+    {
+      "id": "OP-Voz-Bienvenida",
+      "title": "Bienvenida y resumen por voz de la obra",
+      "type": "componente",
+      "source": "src/main/resources/static/welcome.js; src/main/resources/static/tutorial.js",
+      "summary": "Guía contextual y recorrido completo de ocho secciones para principiantes: crear obra, materiales/campos, proveedores, cotizaciones/ejemplo, costos/alertas, pedidos/recepción, agentes/grafo y rutina diaria. Ofrece siguiente acción y lectura por sección con voces locales sin Gemini. Se actualiza tras guardar sin repetir voz. Los ejemplos no crean datos; es presentación por reglas, no un agente adicional con modelo.",
+      "relations": {
+        "pertenece_a": [
+          "OP-Proyecto"
+        ],
+        "implementa": [
+          "OP-RF-19"
+        ],
+        "consulta": [
+          "OP-Agente-Orquestador"
+        ],
+        "aplica": [
+          "OP-Regla-Costos",
+          "OP-Regla-Logistica",
+          "OP-Regla-Seguimiento"
+        ]
+      }
+    },
+    {
+      "id": "OP-Proyecto",
+      "title": "ObraPlan — bitácora de adquisiciones",
+      "type": "proyecto",
+      "source": "README.md",
+      "summary": "Organiza necesidades de materiales, fechas, cotizaciones y entregas. Su memoria conecta fundamento, componentes y registros.",
+      "relations": {
+        "resuelve": [
+          "OP-Problema"
+        ],
+        "documenta": [
+          "OP-Bitacora"
+        ],
+        "se_construye_con": [
+          "OP-Arquitectura"
+        ],
+        "coordina": [
+          "OP-Agente-Orquestador",
+          "OP-Agente-Conocimiento",
+          "OP-IA-Coordinador"
+        ],
+        "se_explica_en": [
+          "OP-Guion-Video"
+        ],
+        "consulta": [
+          "OP-Referencia-Analisis",
+          "OP-Referencias-Profesor"
+        ]
+      }
+    },
+    {
+      "id": "OP-Problema",
+      "title": "Problema: adquisiciones con información dispersa",
+      "type": "problema",
+      "source": "docs/PROBLEMA.md",
+      "summary": "Escenario académico: cuesta relacionar necesidades, fechas, precios y pedidos. No hay encuesta realizada; las consecuencias son hipótesis.",
+      "relations": {
+        "origina": [
+          "OP-RF-03",
+          "OP-RF-05",
+          "OP-RF-08",
+          "OP-RF-10",
+          "OP-RF-11",
+          "OP-RF-15"
+        ],
+        "analizado_por": [
+          "OP-Rol-Problema",
+          "OP-Rol-Requisitos"
+        ]
+      }
+    },
+    {
+      "id": "OP-Rol-Problema",
+      "title": "Rol de planteamiento del problema",
+      "type": "agente",
+      "source": ".agents/skills/obraplan-problema/SKILL.md",
+      "summary": "Skill propia para contexto, actores, problema central, objetivos, hipótesis y límites; produce PROBLEMA.md.",
+      "relations": {
+        "produce": [
+          "OP-Problema"
+        ],
+        "entrega_a": [
+          "OP-Rol-Requisitos"
+        ],
+        "consulta": [
+          "OP-Referencia-Analisis"
+        ]
+      }
+    },
+    {
+      "id": "OP-Rol-Requisitos",
+      "title": "Rol de análisis de requisitos",
+      "type": "agente",
+      "source": ".agents/skills/obraplan-requisitos/SKILL.md",
+      "summary": "Skill propia: transforma necesidades en RF, RNF, reglas y criterios observables. Conserva fuentes y distingue propuesta de validación.",
+      "relations": {
+        "especifica": [
+          "OP-RF-05",
+          "OP-RF-10",
+          "OP-RNF-08"
+        ],
+        "produce": [
+          "OP-Trazabilidad"
+        ],
+        "consulta": [
+          "OP-Problema",
+          "OP-Referencia-Analisis"
+        ]
+      }
+    },
+    {
+      "id": "OP-Arquitectura",
+      "title": "Arquitectura: vista, servicios, agentes y memoria",
+      "type": "arquitectura",
+      "source": "docs/ARQUITECTURA.md",
+      "summary": "Vista → Server → AppService → Database/Orchestrator. Cambio persistido → KnowledgeAgent. Entidades conceptuales en objetos JSON.",
+      "relations": {
+        "contiene": [
+          "OP-Componente-Server",
+          "OP-Componente-AppService",
+          "OP-Componente-Database",
+          "OP-Agente-Orquestador",
+          "OP-Agente-Conocimiento",
+          "OP-IA-Coordinador"
+        ],
+        "usa": [
+          "OP-Tecnologia-Java",
+          "OP-Tecnologia-Python",
+          "OP-Tecnologia-Obsidian"
+        ]
+      }
+    },
+    {
+      "id": "OP-Componente-Server",
+      "title": "Server: controlador HTTP y sesión",
+      "type": "componente",
+      "source": "src/main/java/co/obraplan/Server.java",
+      "summary": "Enruta solicitudes, verifica sesión y entrega JSON o recursos. Escucha solo en 127.0.0.1.",
+      "relations": {
+        "delega_en": [
+          "OP-Componente-AppService"
+        ],
+        "implementa": [
+          "OP-RF-01",
+          "OP-RNF-06"
+        ]
+      }
+    },
+    {
+      "id": "OP-Componente-AppService",
+      "title": "AppService: casos de uso y autorización",
+      "type": "componente",
+      "source": "src/main/java/co/obraplan/AppService.java",
+      "summary": "Valida datos, autoriza por propietario/obra y coordina registros y análisis.",
+      "relations": {
+        "usa": [
+          "OP-Componente-Database",
+          "OP-Agente-Orquestador",
+          "OP-Agente-Conocimiento"
+        ],
+        "implementa": [
+          "OP-RF-03",
+          "OP-RF-05",
+          "OP-RF-07",
+          "OP-RF-08",
+          "OP-RF-09"
+        ]
+      }
+    },
+    {
+      "id": "OP-Componente-Database",
+      "title": "Database: datos y cambios confirmados",
+      "type": "componente",
+      "source": "src/main/java/co/obraplan/Database.java",
+      "summary": "JSON con escritura atómica. Opera sobre una copia y notifica al agente de conocimiento después del guardado.",
+      "relations": {
+        "implementa": [
+          "OP-RF-12",
+          "OP-RNF-05"
+        ],
+        "notifica": [
+          "OP-Agente-Conocimiento"
+        ]
+      }
+    },
+    {
+      "id": "OP-Agente-Orquestador",
+      "title": "Agente orquestador",
+      "type": "agente",
+      "source": "src/main/java/co/obraplan/agents/Orchestrator.java",
+      "summary": "Java por reglas: reúne métricas, costos y alertas. No utiliza un LLM.",
+      "relations": {
+        "coordina": [
+          "OP-Agente-Logistica",
+          "OP-Agente-Costos",
+          "OP-Agente-Seguimiento"
+        ],
+        "implementa": [
+          "OP-RF-04",
+          "OP-RF-11",
+          "OP-RF-13"
+        ]
+      }
+    },
+    {
+      "id": "OP-Agente-Logistica",
+      "title": "Agente de logística",
+      "type": "agente",
+      "source": "src/main/java/co/obraplan/agents/LogisticsAgent.java",
+      "summary": "Calcula fecha sugerida de gestión a partir de necesidad y plazo; alerta fechas próximas/vencidas.",
+      "relations": {
+        "aplica": [
+          "OP-Regla-Logistica"
+        ],
+        "analiza": [
+          "OP-Entidad-Material"
+        ],
+        "implementa": [
+          "OP-RF-11"
+        ]
+      }
+    },
+    {
+      "id": "OP-Agente-Costos",
+      "title": "Agente de costos",
+      "type": "agente",
+      "source": "src/main/java/co/obraplan/agents/CostAgent.java",
+      "summary": "Estima costo conocido, informa faltantes y excluye cotizaciones rechazadas/canceladas.",
+      "relations": {
+        "aplica": [
+          "OP-Regla-Costos"
+        ],
+        "analiza": [
+          "OP-Entidad-Material",
+          "OP-Entidad-Cotizacion"
+        ],
+        "implementa": [
+          "OP-RF-10"
+        ]
+      }
+    },
+    {
+      "id": "OP-Agente-Seguimiento",
+      "title": "Agente de seguimiento",
+      "type": "agente",
+      "source": "src/main/java/co/obraplan/agents/TrackingAgent.java",
+      "summary": "Revisa pedidos realizados/en tránsito con fecha estimada vencida. Propone confirmación manual.",
+      "relations": {
+        "aplica": [
+          "OP-Regla-Seguimiento"
+        ],
+        "analiza": [
+          "OP-Entidad-Cotizacion"
+        ],
+        "implementa": [
+          "OP-RF-11"
+        ]
+      }
+    },
+    {
+      "id": "OP-Agente-Conocimiento",
+      "title": "Agente de conocimiento",
+      "type": "agente",
+      "source": "src/main/java/co/obraplan/agents/KnowledgeAgent.java; agents/knowledge_agent.py",
+      "summary": "Publica notas en Obsidian y consulta evidencia con relaciones. Python recorre vecinos y admite un modelo Ollama opcional.",
+      "relations": {
+        "consulta": [
+          "OP-Proyecto",
+          "OP-Trazabilidad"
+        ],
+        "alimenta": [
+          "OP-Tecnologia-Obsidian"
+        ],
+        "implementa": [
+          "OP-RF-14",
+          "OP-RF-15",
+          "OP-RNF-09"
+        ],
+        "usa": [
+          "OP-Tecnologia-Python"
+        ]
+      }
+    },
+    {
+      "id": "OP-Regla-Costos",
+      "title": "Regla: costo conocido y materiales sin cotización",
+      "type": "regla",
+      "source": "docs/ANALISIS.md; src/main/java/co/obraplan/agents/CostAgent.java",
+      "summary": "Subtotal = cantidad requerida × menor precio unitario válido. Cancelado/Rechazada se excluyen. Sin cotización: precio/subtotal nulos, no costo cero. El total es parcial con faltantes; no incluye flete/impuestos/calidad.",
+      "relations": {
+        "sustenta": [
+          "OP-RF-10",
+          "OP-RNF-01"
+        ],
+        "implementada_por": [
+          "OP-Agente-Costos"
+        ]
+      }
+    },
+    {
+      "id": "OP-Regla-Logistica",
+      "title": "Regla: fecha sugerida de gestión",
+      "type": "regla",
+      "source": "docs/ANALISIS.md; src/main/java/co/obraplan/agents/LogisticsAgent.java",
+      "summary": "Fecha sugerida = fecha necesaria − plazo. Antes de hoy: crítica; dentro de 0–3 días: próxima. Recibidos no alertan. Fechas manuales.",
+      "relations": {
+        "sustenta": [
+          "OP-RF-11"
+        ],
+        "implementada_por": [
+          "OP-Agente-Logistica"
+        ]
+      }
+    },
+    {
+      "id": "OP-Regla-Seguimiento",
+      "title": "Regla: entregas de pedidos en curso",
+      "type": "regla",
+      "source": "docs/ANALISIS.md; src/main/java/co/obraplan/agents/TrackingAgent.java",
+      "summary": "Pedido realizado/En tránsito con fecha anterior a hoy: revisar con proveedor. Recibido/Cancelado/Rechazada y cotización aún no pedida no alertan.",
+      "relations": {
+        "sustenta": [
+          "OP-RF-09",
+          "OP-RF-11"
+        ],
+        "implementada_por": [
+          "OP-Agente-Seguimiento"
+        ]
+      }
+    },
+    {
+      "id": "OP-Entidad-Obra",
+      "title": "Entidad Obra",
+      "type": "entidad",
+      "source": "docs/ARQUITECTURA.md",
+      "summary": "Proyecto con propietario, ubicación, etapa e inicio. Agrupa necesidades y precios.",
+      "relations": {
+        "contiene": [
+          "OP-Entidad-Material",
+          "OP-Entidad-Ferreteria",
+          "OP-Entidad-Cotizacion"
+        ],
+        "satisface": [
+          "OP-RF-03"
+        ]
+      }
+    },
+    {
+      "id": "OP-Entidad-Material",
+      "title": "Entidad Material",
+      "type": "entidad",
+      "source": "docs/ARQUITECTURA.md",
+      "summary": "Necesidad: nombre, cantidad, unidad, etapa, fecha necesaria, plazo y estado.",
+      "relations": {
+        "pertenece_a": [
+          "OP-Entidad-Obra"
+        ],
+        "recibe": [
+          "OP-Entidad-Cotizacion"
+        ],
+        "satisface": [
+          "OP-RF-05"
+        ]
+      }
+    },
+    {
+      "id": "OP-Entidad-Ferreteria",
+      "title": "Entidad Ferretería",
+      "type": "entidad",
+      "source": "docs/ARQUITECTURA.md",
+      "summary": "Contacto registrado para cotizar manualmente; no hay inventario automático.",
+      "relations": {
+        "ofrece": [
+          "OP-Entidad-Cotizacion"
+        ],
+        "satisface": [
+          "OP-RF-07"
+        ]
+      }
+    },
+    {
+      "id": "OP-Entidad-Cotizacion",
+      "title": "Entidad Cotización",
+      "type": "entidad",
+      "source": "docs/ARQUITECTURA.md",
+      "summary": "Precio, cantidad y plazo vinculados a material y proveedor de la misma obra.",
+      "relations": {
+        "cotiza": [
+          "OP-Entidad-Material"
+        ],
+        "ofertada_por": [
+          "OP-Entidad-Ferreteria"
+        ],
+        "satisface": [
+          "OP-RF-08"
+        ]
+      }
+    },
+    {
+      "id": "OP-Trazabilidad",
+      "title": "Trazabilidad de necesidad a evidencia",
+      "type": "documento",
+      "source": "docs/TRAZABILIDAD.md",
+      "summary": "Relaciona necesidades, requisitos, componentes, agentes y acciones de demostración.",
+      "relations": {
+        "verificada_en": [
+          "OP-Verificacion"
+        ],
+        "explicada_en": [
+          "OP-Guion-Video"
+        ],
+        "satisface": [
+          "OP-RNF-08"
+        ]
+      }
+    },
+    {
+      "id": "OP-Bitacora",
+      "title": "Bitácora de decisiones y desarrollo",
+      "type": "documento",
+      "source": "docs/BITACORA.md",
+      "summary": "Cambios, motivos, pruebas y pendientes. Distinta de la actividad operativa de cada obra.",
+      "relations": {
+        "documenta": [
+          "OP-Proyecto",
+          "OP-Referencias-Profesor"
+        ],
+        "sustentada_por": [
+          "OP-Verificacion"
+        ]
+      }
+    },
+    {
+      "id": "OP-Guion-Video",
+      "title": "Guion del video y recorrido funcional",
+      "type": "documento",
+      "source": "docs/GUIA_VIDEO.md",
+      "summary": "Origen, RF/RNF, estructura, agentes, aplicación, grafo y alimentación automática.",
+      "relations": {
+        "explica": [
+          "OP-Problema",
+          "OP-Arquitectura",
+          "OP-Agente-Conocimiento"
+        ],
+        "demuestra": [
+          "OP-RF-05",
+          "OP-RF-10",
+          "OP-RF-15"
+        ]
+      }
+    },
+    {
+      "id": "OP-Verificacion",
+      "title": "Verificación reproducible",
+      "type": "evidencia",
+      "source": "docs/VERIFICACION.md",
+      "summary": "Pruebas de reglas, integridad, aislamiento, persistencia, consulta y grafo. Resultados locales en output/verification.",
+      "relations": {
+        "comprueba": [
+          "OP-RF-10",
+          "OP-RF-12",
+          "OP-RF-14",
+          "OP-RF-15",
+          "OP-RNF-06"
+        ]
+      }
+    },
+    {
+      "id": "OP-Tecnologia-Java",
+      "title": "Java 21 y HTTP local",
+      "type": "tecnologia",
+      "source": "COMO_SE_HACEN_LAS_COSAS.md",
+      "summary": "JDK 21 compila servicios y especialistas sin Maven. Rutas del entorno registradas en el mapa.",
+      "relations": {
+        "usada_por": [
+          "OP-Arquitectura"
+        ]
+      }
+    },
+    {
+      "id": "OP-Tecnologia-Python",
+      "title": "Python y entornos independientes",
+      "type": "tecnologia",
+      "source": "agents/knowledge_agent.py; pyproject.toml",
+      "summary": "Biblioteca estándar >=3.11. Agentes externos usan intérprete propio, cwd y JSON; no mezclan bibliotecas.",
+      "relations": {
+        "usada_por": [
+          "OP-Agente-Conocimiento"
+        ],
+        "satisface": [
+          "OP-RNF-09"
+        ]
+      }
+    },
+    {
+      "id": "OP-Tecnologia-Obsidian",
+      "title": "Obsidian como memoria conectada",
+      "type": "tecnologia",
+      "source": "docs/CONOCIMIENTO.md",
+      "summary": "Vault C:/cerebro_dev; wikilinks conectan notas. Generación y aprendizajes editables separados.",
+      "relations": {
+        "conecta": [
+          "OP-Proyecto",
+          "OP-Trazabilidad",
+          "OP-Referencia-Analisis"
+        ],
+        "satisface": [
+          "OP-RF-15",
+          "OP-RNF-10"
+        ]
+      }
+    },
+    {
+      "id": "OP-Referencia-Analisis",
+      "title": "Referencia local: proceso de análisis v0.4",
+      "type": "fuente",
+      "source": "C:/Users/ASUS/OneDrive/Documentos/ChatGPT/Definicion Proceso de Analisis/08_Propuesta_integrada_v0.4/02_Proceso_operativo.md",
+      "summary": "Recepción, necesidad, requisitos, reglas, revisión y evidencia. Referencia local no atribuida al profesor sin prueba.",
+      "relations": {
+        "orienta": [
+          "OP-Rol-Problema",
+          "OP-Rol-Requisitos"
+        ]
+      }
+    },
+    {
+      "id": "OP-Integracion-Cerebro",
+      "title": "Memoria compartida entre proyectos y entornos",
+      "type": "integracion",
+      "source": "docs/CONOCIMIENTO.md",
+      "summary": "El agente consulta notas generales ya existentes mediante una lista explícita en config/integrations.json. Leer sobre LangChain u Ollama no significa ejecutar esos frameworks. Cada agente externo conserva su intérprete y contrato.",
+      "relations": {
+        "conecta": [
+          "OP-Proyecto",
+          "OP-Agente-Conocimiento"
+        ],
+        "consulta": [
+          "Conocimiento/LangChain",
+          "Conocimiento/Ollama",
+          "Conocimiento/Integracion-LangChain-Gemini-Ollama"
+        ],
+        "se_configura_con": [
+          "OP-Tecnologia-Python"
+        ]
+      }
+    },
+    {
+      "id": "OP-Referencias-Profesor",
+      "title": "Referencias y pendiente de agentes originales",
+      "type": "fuente",
+      "source": "docs/FUENTES_Y_REFERENCIAS.md",
+      "summary": "Capturas muestran nombres y organización. Código original y rúbrica no localizados; integración deshabilitada hasta conocer rutas.",
+      "relations": {
+        "orienta": [
+          "OP-Proyecto"
+        ],
+        "registrada_en": [
+          "OP-Bitacora"
+        ]
+      }
+    },
+    {
+      "id": "OP-IA-Coordinador",
+      "title": "Coordinador IA durante el uso",
+      "type": "agente-ia",
+      "source": "src/main/java/co/obraplan/agents/ai/AgentTeam.java",
+      "summary": "Interpreta la pregunta y delega mediante funciones del modelo en tres contextos especialistas. Tras completarlos sintetiza sin volver a delegar, con espacio de salida reservado y referencias breves vinculadas a fuentes canónicas. Informa el motivo de detención y conserva solo propuestas completas y vigentes.",
+      "relations": {
+        "coordina": [
+          "OP-IA-Logistica",
+          "OP-IA-Costos",
+          "OP-IA-Conocimiento"
+        ],
+        "implementa": [
+          "OP-RF-16",
+          "OP-RF-17",
+          "OP-RNF-11"
+        ],
+        "se_configura_en": [
+          "OP-IA-Configuracion"
+        ]
+      }
+    },
+    {
+      "id": "OP-IA-Logistica",
+      "title": "Agente IA de logística y seguimiento",
+      "type": "agente-ia",
+      "source": "src/main/java/co/obraplan/agents/ai/AgentTeam.java",
+      "summary": "Consulta materiales, pedidos y alertas locales; interpreta prioridades sin ejecutar compras ni confirmar estados comerciales.",
+      "relations": {
+        "usa": [
+          "OP-Agente-Logistica",
+          "OP-Agente-Seguimiento"
+        ],
+        "implementa": [
+          "OP-RF-16"
+        ],
+        "aplica": [
+          "OP-Regla-Logistica",
+          "OP-Regla-Seguimiento"
+        ]
+      }
+    },
+    {
+      "id": "OP-IA-Costos",
+      "title": "Agente IA de costos",
+      "type": "agente-ia",
+      "source": "src/main/java/co/obraplan/WorkAgentTools.java",
+      "summary": "Decide consultas de cotizaciones y cálculos; conserva importes calculados por Java y reconoce faltantes.",
+      "relations": {
+        "usa": [
+          "OP-Agente-Costos"
+        ],
+        "aplica": [
+          "OP-Regla-Costos"
+        ],
+        "implementa": [
+          "OP-RF-16"
+        ]
+      }
+    },
+    {
+      "id": "OP-IA-Conocimiento",
+      "title": "Agente IA de conocimiento",
+      "type": "agente-ia",
+      "source": "src/main/java/co/obraplan/WorkAgentTools.java",
+      "summary": "Recupera fuentes y vecinos del grafo para el modelo. Propuestas confirmadas se vinculan a obra, coordinador y fuentes.",
+      "relations": {
+        "usa": [
+          "OP-Agente-Conocimiento"
+        ],
+        "implementa": [
+          "OP-RF-16",
+          "OP-RF-18"
+        ],
+        "alimenta": [
+          "OP-Tecnologia-Obsidian"
+        ]
+      }
+    },
+    {
+      "id": "OP-IA-Configuracion",
+      "title": "Configuración gratuita de agentes Gemini",
+      "type": "integracion",
+      "source": "docs/IA_CONFIGURACION.md",
+      "summary": "Clave protegida por Windows, modelo compartido, límites y pruebas simuladas separadas de validación real. Cuenta Google sin facturación requerida; conexión pendiente hasta configurar clave.",
+      "relations": {
+        "documenta": [
+          "OP-IA-Coordinador",
+          "OP-IA-Logistica",
+          "OP-IA-Costos",
+          "OP-IA-Conocimiento"
+        ],
+        "implementa": [
+          "OP-RNF-12"
+        ],
+        "se_verifica_en": [
+          "OP-Verificacion"
+        ]
+      }
+    },
+    {
+      "id": "OP-Publicacion",
+      "title": "Publicación en GitHub y despliegue",
+      "type": "documentacion",
+      "source": "docs/PUBLICACION.md",
+      "summary": "Código y documentación publicables sin claves ni datos de usuarios. Vercel Container Runtime admite Java en beta; un despliegue estable necesita persistencia externa, sesiones y escucha adaptadas. No hay URL remota verificada.",
+      "relations": {
+        "pertenece_a": [
+          "OP-Proyecto"
+        ],
+        "documenta": [
+          "OP-RNF-06",
+          "OP-RNF-12"
+        ],
+        "se_verifica_en": [
+          "OP-Verificacion"
+        ]
+      }
+    }
+  ]
+}

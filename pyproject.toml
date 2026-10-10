@@ -1,0 +1,9 @@
+[project]
+name = "obraplan-knowledge-agent"
+version = "0.2.0"
+description = "Agente local de consulta y mantenimiento del conocimiento de ObraPlan"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.uv]
+package = false

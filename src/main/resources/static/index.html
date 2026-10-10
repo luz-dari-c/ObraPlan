@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#153f3b" />
+    <meta
+      name="description"
+      content="ObraPlan organiza materiales, cotizaciones y compras de obra."
+    />
+    <title>ObraPlan — Bitácora de obra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/style.css" />
+  </head>
+  <body>
+    <div id="login-screen" class="screen">
+      <main class="login-shell">
+        <section class="login-panel">
+          <form id="auth-form" class="login-form">
+            <div class="brand"><span class="brand-mark"></span>ObraPlan</div>
+            <span class="demo-chip login-demo"
+              >Acceso demostrativo disponible</span
+            >
+            <h1 id="auth-title">Organiza las compras de tu obra</h1>
+            <p class="lead">
+              Planifica materiales, fechas y cotizaciones manuales desde una
+              sola bitácora de obra.
+            </p>
+            <div class="field auth-name hidden">
+              <label for="auth-name">Nombre completo</label
+              ><input
+                id="auth-name"
+                autocomplete="name"
+                placeholder="Tu nombre"
+              />
+            </div>
+            <div class="field">
+              <label for="auth-email">Correo electrónico</label
+              ><input
+                id="auth-email"
+                type="email"
+                autocomplete="email"
+                placeholder="nombre@correo.com"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="auth-password">Contraseña</label>
+              <div class="password-wrap">
+                <input
+                  id="auth-password"
+                  type="password"
+                  autocomplete="current-password"
+                  placeholder="Tu contraseña"
+                  required
+                /><button
+                  id="toggle-password"
+                  type="button"
+                  class="toggle-pass"
+                >
+                  Mostrar
+                </button>
+              </div>
+            </div>
+            <p id="auth-error" class="error" role="alert"></p>
+            <button
+              class="btn btn-primary w-full"
+              id="auth-submit"
+              type="submit"
+            >
+              Iniciar sesión
+            </button>
+            <div class="form-row">
+              <button id="auth-switch" type="button" class="link">
+                Crear una cuenta</button
+              ><button id="forgot-link" type="button" class="link">
+                ¿Olvidaste tu contraseña?
+              </button>
+            </div>
+            <div class="demo-credentials">
+              <span class="eyebrow">CUENTA DE PRUEBA</span><br /><b
+                >demo@obraplan.co</b
+              ><br /><code>ObraPlan2026!</code>
+            </div>
+          </form>
+        </section>
+        <aside class="login-art">
+          <div class="blueprint-grid"></div>
+          <div class="building-ground"></div>
+          <svg
+            class="isometric-building"
+            viewBox="0 0 420 340"
+            role="img"
+            aria-label="Dibujo técnico de una vivienda"
+          >
+            <g fill="none" stroke="#aebda5" stroke-width="1.4">
+              <path
+                d="M72 146 207 76l139 72-137 75zM72 146v107l137 73V223M346 148v105l-137 73M108 128v106m31-122v106m33-123v106m68-118v106m34-92v106m33-89v106M73 176l136 73 137-72"
+              />
+              <path d="m207 76 0-51 139 72v51M72 146 36 127l135-70 35 19" />
+            </g>
+            <g fill="none" stroke="#e7bd3e" stroke-width="1.5">
+              <path
+                d="m36 127 0 106 173 93m0-103 137-75M171 57v108m36-89 0 106m139-85-137 73M108 234l137-74"
+              />
+            </g>
+            <g fill="none" stroke="#b65e42" stroke-width="1.3">
+              <path
+                d="m139 112 33 18v38l-33-18zm101 52 33-17v37l-33 18zm-101 57 33 18v39l-33-18z"
+              />
+            </g>
+          </svg>
+          <div class="draw-line dl1"></div>
+          <div class="draw-line dl2"></div>
+          <div class="draw-line dl3"></div>
+          <span class="coordinate c1">E-04 / 06</span
+          ><span class="coordinate c2">OBRA · 01</span
+          ><span class="coordinate c3">6°14' N · 75°34' W</span>
+          <div class="project-slip">
+            <span class="eyebrow light">BITÁCORA DE OBRA · MEDELLÍN</span>
+            <h2>De la lista de materiales al plan de compras.</h2>
+            <p>
+              Registra lo que cotizaste, cuándo lo necesitas y qué sigue
+              pendiente.
+            </p>
+            <div class="art-spec">
+              <span>01 / PLANIFICAR</span><span>02 / COTIZAR</span
+              ><span>03 / SEGUIR</span>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+    <div id="works-screen" class="screen hidden technical-bg">
+      <main class="works-main">
+        <header class="works-top">
+          <div class="brand"><span class="brand-mark"></span>ObraPlan</div>
+          <div>
+            <span id="works-user" class="muted"></span
+            ><button id="works-logout" class="link">Cerrar sesión</button>
+          </div>
+        </header>
+        <div class="page-head">
+          <div>
+            <span class="eyebrow">BITÁCORA / PROYECTOS</span>
+            <h1>Mis obras</h1>
+            <p class="page-subtitle">
+              Selecciona una obra para organizar sus adquisiciones y
+              seguimiento.
+            </p>
+          </div>
+          <button id="create-work-btn" class="btn btn-primary">
+            ＋ Crear obra
+          </button>
+        </div>
+        <section id="works-list" class="work-index"></section>
+        <section id="works-empty" class="empty hidden">
+          <span class="eyebrow">NUEVO PROYECTO</span>
+          <h2>Todavía no tienes obras registradas</h2>
+          <p>
+            Crea tu primera obra para comenzar a organizar materiales y fechas.
+          </p>
+          <button id="empty-create" class="btn btn-primary">
+            Crear mi primera obra
+          </button>
+        </section>
+      </main>
+    </div>
+    <div id="app-screen" class="screen hidden technical-bg">
+      <div class="app-layout">
+        <aside class="sidebar">
+          <div class="brand"><span class="brand-mark"></span>ObraPlan</div>
+          <label class="side-label" for="project-select">OBRA ACTIVA</label
+          ><select id="project-select" class="project-select"></select>
+          <nav>
+            <a href="#resumen" class="nav-item active" data-route="summary"
+              ><span>⌂</span>Resumen</a
+            ><a href="#plan" class="nav-item" data-route="plan"
+              ><span>⌗</span>Plan de adquisiciones</a
+            ><a href="#materials" class="nav-item" data-route="plan"
+              ><span>▦</span>Materiales</a
+            ><a href="#ferreterias" class="nav-item" data-route="hardware"
+              ><span>⌂</span>Ferreterías</a
+            ><a href="#cotizaciones" class="nav-item" data-route="quotes"
+              ><span>☷</span>Cotizaciones y pedidos</a
+            >
+            <a href="#conocimiento" class="nav-item" data-route="knowledge"
+              ><span>◉</span>Agentes y conocimiento</a
+            >
+          </nav>
+          <div class="side-bottom">
+            <strong id="side-name">Usuario</strong
+            ><span>Coordinación de obra</span
+            ><button id="account-btn" type="button">Mi cuenta</button
+            ><button id="logout-btn" type="button">Cerrar sesión</button>
+          </div>
+        </aside>
+        <main class="main-area">
+          <aside
+            id="work-welcome"
+            class="work-welcome"
+            hidden
+            aria-label="Bienvenida y resumen por voz"
+          >
+            <div class="welcome-heading">
+              <span class="eyebrow">TU OBRA AL DÍA</span
+              ><span class="welcome-tag">Tu guía de la obra</span>
+            </div>
+            <ol
+              id="welcome-steps"
+              class="welcome-steps"
+              aria-label="Recorrido para organizar la obra"
+            ></ol>
+            <h2 id="welcome-guide-title" class="welcome-guide-title"></h2>
+            <p id="welcome-guide-text"></p>
+            <button id="welcome-next" class="btn btn-primary" type="button">
+              Empezar
+            </button>
+            <details class="welcome-transcript">
+              <summary>Ver el saludo y resumen completo</summary>
+              <p id="welcome-text"></p>
+            </details>
+            <div class="welcome-controls">
+              <button
+                id="welcome-play"
+                class="btn btn-primary btn-small"
+                type="button"
+              >
+                Escuchar resumen
+              </button>
+              <button
+                id="welcome-stop"
+                class="btn btn-secondary btn-small"
+                type="button"
+              >
+                Detener
+              </button>
+              <button
+                id="welcome-toggle"
+                class="text-action"
+                type="button"
+                aria-pressed="true"
+              >
+                Silenciar bienvenida
+              </button>
+            </div>
+            <p
+              id="welcome-status"
+              class="minor"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <p class="minor">
+              ¿Es tu primera vez? Abre la guía completa para conocer todo el
+              proceso.
+            </p>
+            <details id="welcome-manual" class="welcome-manual">
+              <summary>
+                Guía completa: desde tu primera obra hasta la entrega
+              </summary>
+              <p>
+                Lee los pasos en orden o abre el que necesitas. Los ejemplos son
+                ilustrativos; no se guardan registros al leer esta guía.
+              </p>
+              <div id="welcome-lessons"></div>
+            </details>
+          </aside>
+          <div class="topline">
+            <span id="breadcrumbs" class="breadcrumbs"></span
+            ><span class="demo-chip" id="data-mode-chip"
+              >Datos demostrativos</span
+            >
+          </div>
+          <section id="summary-view" class="view">
+            <div class="page-head">
+              <div>
+                <span class="eyebrow"
+                  >TABLERO / <span id="summary-date"></span
+                ></span>
+                <h1>Resumen de obra</h1>
+                <p id="summary-location" class="page-subtitle"></p>
+              </div>
+              <div class="actions">
+                <select
+                  id="stage-select"
+                  class="btn btn-secondary"
+                  aria-label="Cambiar etapa"
+                >
+                  <option>Cimentación</option>
+                  <option>Estructura</option>
+                  <option>Mampostería</option>
+                  <option>Acabados</option></select
+                ><button id="summary-material-btn" class="btn btn-primary">
+                  ＋ Registrar material</button
+                ><button id="summary-supplier-btn" class="btn btn-secondary">
+                  ＋ Agregar ferretería
+                </button>
+              </div>
+            </div>
+            <div id="work-dossier" class="dossier"></div>
+            <div id="summary-metrics" class="summary-grid"></div>
+            <section class="section">
+              <div class="section-title">
+                <div>
+                  <span class="eyebrow">CALENDARIO DE ABASTECIMIENTO</span>
+                  <h2>Próximas adquisiciones</h2>
+                  <p>
+                    Materiales que requieren cotización o compra en las
+                    siguientes fechas.
+                  </p>
+                </div>
+                <button id="full-plan-btn" class="link">
+                  Ver plan completo ↗
+                </button>
+              </div>
+              <div id="upcoming-list" class="data-card"></div>
+            </section>
+            <div class="summary-lower">
+              <section class="section">
+                <div class="section-title">
+                  <div>
+                    <span class="eyebrow">DIRECTORIO LOCAL</span>
+                    <h2>Ferreterías guardadas</h2>
+                  </div>
+                  <button id="directory-btn" class="link">
+                    Ver directorio ↗
+                  </button>
+                </div>
+                <div id="summary-suppliers" class="supplier-mini"></div>
+              </section>
+              <section class="section">
+                <div class="section-title">
+                  <div>
+                    <span class="eyebrow">BITÁCORA</span>
+                    <h2>Actividad reciente</h2>
+                  </div>
+                </div>
+                <div id="activity-list" class="timeline"></div>
+              </section>
+            </div>
+            <section id="agent-panel" class="agent-panel"></section>
+          </section>
+          <section id="plan-view" class="view hidden">
+            <div class="page-head">
+              <div>
+                <span class="eyebrow">PLANIFICACIÓN / ABASTECIMIENTO</span>
+                <h1>Plan de adquisiciones</h1>
+                <p class="page-subtitle">
+                  Ordena los materiales por etapa, fecha necesaria y estado de
+                  compra.
+                </p>
+              </div>
+              <div class="actions">
+                <button id="plan-quote-btn" class="btn btn-secondary">
+                  Registrar cotización</button
+                ><button id="plan-material-btn" class="btn btn-primary">
+                  ＋ Registrar material
+                </button>
+              </div>
+            </div>
+            <div id="cost-summary" class="cost-summary"></div>
+            <div class="toolbar">
+              <input
+                id="material-search"
+                placeholder="Buscar material…"
+                aria-label="Buscar material"
+              /><select id="stage-filter">
+                <option value="">Todas las etapas</option>
+                <option>Cimentación</option>
+                <option>Estructura</option>
+                <option>Mampostería</option>
+                <option>Acabados</option></select
+              ><select id="status-filter">
+                <option value="">Todos los estados</option>
+                <option>Por cotizar</option>
+                <option>Cotizado</option>
+                <option>Pedido</option>
+                <option>Recibido</option></select
+              ><select id="date-filter">
+                <option value="">Cualquier fecha</option>
+                <option value="soon">Necesidad en 7 días</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Material</th>
+                    <th>Etapa</th>
+                    <th>Cantidad</th>
+                    <th>Se necesita</th>
+                    <th>Plazo proveedor</th>
+                    <th>Precio unitario</th>
+                    <th>Subtotal estimado</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="material-table-body"></tbody>
+              </table>
+            </div>
+            <p class="note">
+              Los precios se registran manualmente. Los materiales sin
+              cotización no se suman al subtotal.
+            </p>
+          </section>
+          <section id="hardware-view" class="view hidden">
+            <div class="page-head">
+              <div>
+                <span class="eyebrow">CONTACTOS / PROVEEDORES</span>
+                <h1>Ferreterías</h1>
+                <p class="page-subtitle">
+                  Directorio manual para contactar y solicitar cotizaciones.
+                </p>
+              </div>
+              <button id="add-supplier-btn" class="btn btn-primary">
+                ＋ Agregar ferretería
+              </button>
+            </div>
+            <div class="toolbar supplier-toolbar">
+              <input
+                id="supplier-search"
+                placeholder="Buscar por nombre…"
+              /><select id="city-filter">
+                <option value="">Todas las ubicaciones</option></select
+              ><span></span><span></span>
+            </div>
+            <div id="supplier-directory" class="supplier-list"></div>
+            <p class="note">
+              ObraPlan no contacta proveedores ni consulta inventario
+              automáticamente.
+            </p>
+          </section>
+          <section id="quotes-view" class="view hidden">
+            <div class="page-head">
+              <div>
+                <span class="eyebrow">REGISTRO / SEGUIMIENTO</span>
+                <h1>Cotizaciones y pedidos</h1>
+                <p class="page-subtitle">
+                  Guarda precios y plazos recibidos por contacto manual.
+                </p>
+              </div>
+              <button id="add-quote-btn" class="btn btn-primary">
+                ＋ Registrar cotización
+              </button>
+            </div>
+            <div class="flow">
+              <span class="flow-step">01 <i></i>COTIZACIÓN</span
+              ><span class="flow-step">02 <i></i>DECISIÓN</span
+              ><span class="flow-step">03 <i></i>PEDIDO</span
+              ><span class="flow-step">04 <i></i>EN TRÁNSITO</span
+              ><span class="flow-step">05 <i></i>RECIBIDO</span>
+            </div>
+            <div class="toolbar quote-toolbar">
+              <select id="quote-status-filter">
+                <option value="">Todos los estados</option>
+                <option>Cotización recibida</option>
+                <option>Pendiente de decisión</option>
+                <option>Pedido realizado</option>
+                <option>En tránsito</option>
+                <option>Recibido</option>
+                <option>Cancelado</option>
+                <option>Rechazada</option></select
+              ><select id="quote-supplier-filter">
+                <option value="">Todas las ferreterías</option></select
+              ><span></span><span></span>
+            </div>
+            <div class="tabs">
+              <button class="tab active" data-tab="Todas">Todas</button
+              ><button class="tab" data-tab="Cotizaciones">Cotizaciones</button
+              ><button class="tab" data-tab="Pedidos">Pedidos</button
+              ><button class="tab" data-tab="Recibidos">Recibidos</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Material</th>
+                    <th>Ferretería</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Cotizada</th>
+                    <th>Entrega</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="quote-table-body"></tbody>
+              </table>
+            </div>
+            <section id="quote-empty" class="empty hidden">
+              <h2>No hay cotizaciones para mostrar</h2>
+              <p>
+                Registra una cotización manual para hacer seguimiento a precios
+                y plazos.
+              </p>
+              <button id="quote-empty-button" class="btn btn-primary">
+                Registrar cotización
+              </button>
+            </section>
+            <p class="note">
+              Precio y plazo ingresados manualmente a partir del contacto con el
+              proveedor.
+            </p>
+          </section>
+          <section id="knowledge-view" class="view hidden">
+            <div class="page-head">
+              <div>
+                <span class="eyebrow">MEMORIA / TRAZABILIDAD</span>
+                <h1>Agentes y conocimiento</h1>
+                <p class="page-subtitle">
+                  Explora cómo se conectan el problema, los requisitos y los
+                  registros de esta obra.
+                </p>
+              </div>
+              <button id="knowledge-sync" class="btn btn-primary">
+                Actualizar conocimiento
+              </button>
+            </div>
+            <div id="knowledge-status" class="notice" role="status"></div>
+            <section class="section assistant-panel">
+              <span class="eyebrow">ASISTENTE DE ADQUISICIONES</span>
+              <h2>Analiza tu obra con agentes de IA</h2>
+              <p id="assistant-status" class="notice" role="status">
+                Comprobando configuración…
+              </p>
+              <p class="minor">
+                El asistente consulta datos de esta obra y fuentes del grafo.
+                Sus respuestas son propuestas; confirma fechas y precios antes
+                de actuar.
+              </p>
+              <details id="assistant-setup">
+                <summary>Cómo activar Gemini gratuito</summary>
+                <p>
+                  Crea una clave en
+                  <a
+                    href="https://aistudio.google.com/api-keys"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Google AI Studio</a
+                  >
+                  para un proyecto sin facturación habilitada. El nivel gratuito
+                  tiene cuotas y Google puede usar el contenido enviado para
+                  mejorar sus productos.
+                </p>
+                <p>
+                  Desde PowerShell, en la carpeta de ObraPlan, ejecuta
+                  <code>./scripts/configure_ai.ps1</code>, introduce la clave en
+                  el campo oculto y reinicia con <code>./run.ps1</code>. No
+                  pegues tu clave aquí.
+                </p>
+              </details>
+              <div class="actions assistant-examples">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-assistant-question="¿Qué materiales debo gestionar primero y qué pedidos requieren revisión?"
+                >
+                  Revisar prioridades
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-assistant-question="¿Cuál es el subtotal conocido y qué materiales siguen sin precio?"
+                >
+                  Analizar costos
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-assistant-question="¿Qué debo gestionar primero, cuánto costaría y qué reglas del proyecto respaldan la propuesta?"
+                >
+                  Análisis conjunto
+                </button>
+              </div>
+              <form id="assistant-form">
+                <label for="assistant-question"
+                  >¿Qué necesitas revisar en esta obra?</label
+                >
+                <textarea
+                  id="assistant-question"
+                  rows="3"
+                  maxlength="600"
+                  required
+                  placeholder="Ej. Compara las cotizaciones y explica cuáles requieren revisión."
+                ></textarea>
+                <button
+                  id="assistant-submit"
+                  class="btn btn-primary"
+                  type="submit"
+                >
+                  Consultar agentes
+                </button>
+              </form>
+              <p id="assistant-progress" role="status" aria-live="polite"></p>
+              <div id="assistant-result" class="hidden">
+                <p id="assistant-answer" class="assistant-answer"></p>
+                <p id="assistant-usage" class="minor"></p>
+                <details open>
+                  <summary>Agentes y herramientas que participaron</summary>
+                  <ol id="assistant-trace"></ol>
+                </details>
+                <h3>Fuentes consultadas</h3>
+                <ul id="assistant-sources"></ul>
+                <button
+                  id="assistant-save"
+                  type="button"
+                  class="btn btn-secondary"
+                >
+                  Conservar propuesta en el grafo
+                </button>
+              </div>
+            </section>
+            <section class="section">
+              <div class="section-title">
+                <div>
+                  <span class="eyebrow">EQUIPO DE APOYO</span>
+                  <h2>Agentes de IA y herramientas locales</h2>
+                </div>
+              </div>
+              <div id="knowledge-agents" class="agent-grid"></div>
+            </section>
+            <section class="section knowledge-query">
+              <span class="eyebrow">CONSULTA CON FUENTES</span>
+              <h2>Buscar fuentes en el grafo sin usar IA</h2>
+              <form id="knowledge-form">
+                <label for="knowledge-question"
+                  >Tema que quieres consultar</label
+                >
+                <div class="knowledge-search">
+                  <input
+                    id="knowledge-question"
+                    required
+                    maxlength="300"
+                    placeholder="Ej. ¿Cómo se calcula el costo sin cotización?"
+                  /><button class="btn btn-primary" type="submit">
+                    Consultar
+                  </button>
+                </div>
+              </form>
+              <p id="knowledge-answer" aria-live="polite"></p>
+              <div id="knowledge-sources" class="knowledge-sources"></div>
+            </section>
+            <section class="section">
+              <div class="section-title">
+                <div>
+                  <span class="eyebrow">GRAFO DE CONOCIMIENTO</span>
+                  <h2>Una memoria con relaciones</h2>
+                  <p id="graph-count"></p>
+                </div>
+                <label class="graph-picker"
+                  >Explorar nodo<select
+                    id="graph-node"
+                    aria-label="Nodo del grafo"
+                  ></select
+                ></label>
+              </div>
+              <div class="knowledge-graph-layout">
+                <div id="knowledge-graph" class="graph-surface"></div>
+                <aside id="graph-detail" class="graph-detail"></aside>
+              </div>
+              <p class="note">
+                Selecciona un nodo para ver sus conexiones. Los cambios
+                guardados actualizan las notas de la obra; Obsidian muestra el
+                mismo conocimiento mediante enlaces entre notas.
+              </p>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+    <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true">
+      <section
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <header class="modal-head">
+          <div>
+            <span id="modal-kicker" class="eyebrow"></span>
+            <h2 id="modal-title"></h2>
+          </div>
+          <button id="modal-close" class="close" aria-label="Cerrar">×</button>
+        </header>
+        <div id="modal-content"></div>
+      </section>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/assets/tutorial.js" defer></script>
+    <script src="/assets/welcome.js" defer></script>
+    <script src="/assets/app.js" defer></script>
+    <script src="/assets/knowledge.js" defer></script>
+    <script src="/assets/assistant.js" defer></script>
+  </body>
+</html>
