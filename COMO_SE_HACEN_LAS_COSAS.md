@@ -131,4 +131,3 @@ Edita código, requisitos y catálogo de conceptos. Luego regenera las notas doc
 | `output/knowledge/analyses/<workId>/` | Propuestas confirmadas, conservadas aparte de notas regenerables |
 
 `run.ps1` carga la credencial protegida si no existe GEMINI_API_KEY en el proceso. No instala modelos locales ni carga automáticamente `.env`. La clave necesita un proyecto Google sin facturación; la aplicación no comprueba esa condición en Google.
-

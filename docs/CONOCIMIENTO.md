@@ -63,4 +63,3 @@ Usa IDs únicos, enlaces que apunten a notas existentes y una relación con sign
 El especialista de Conocimiento IA consulta extractos y relaciones de la obra mediante WorkAgentTools. Los agentes y requisitos nuevos se relacionan en el catálogo con herramientas, reglas y evidencia. No basta almacenar notas para que exista razonamiento IA: el modelo decide cuándo consultar esas herramientas durante una ejecución.
 
 Conservar propuesta crea `OP-Analisis-<runId>` con procedencia y vínculos a obra, coordinador y fuentes. Las carpetas `output/knowledge/analyses/<workId>` y `Proyectos/ObraPlan/Analisis/<workId>` se mantienen separadas de Aprendizajes y de las notas operativas regenerables. Cada consulta web mantiene autorización por obra. Python requiere `--work-id` para incluirlas y funciona con permisos del usuario del equipo. La sincronización documental reintenta publicar los análisis locales, sin sobrescribir aprendizajes.
-

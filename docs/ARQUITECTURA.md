@@ -71,4 +71,3 @@ Es una entrega local con JSON y sesiones en memoria. La capa de coordinación IA
 Interfaz `assistant.js` → Server autenticado → WorkAgentTools por propietario/obra → AgentTeam → GeminiClient REST. El coordinador y los tres especialistas tienen historiales independientes y herramientas diferentes. Gemini decide la delegación y las consultas; Java ejecuta herramientas autorizadas y devuelve observaciones al modelo. Los cálculos existentes siguen siendo deterministas.
 
 La IA no escribe adquisiciones. Una confirmación explícita conserva una propuesta completa en KnowledgeAgent, con vínculos al coordinador, obra y fuentes. La recuperación incluye únicamente los análisis de la obra solicitada. Configuración, consumo y estado real en `IA_CONFIGURACION.md`.
-
