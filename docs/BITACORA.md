@@ -92,3 +92,7 @@ Se reescribió README para visitantes: propósito, funcionalidades, recorrido, a
 Vercel ofrece Container Runtime en beta, capaz de ejecutar Java. Un despliegue estable requiere adaptar persistencia JSON, sesiones en memoria y escucha local. PUBLICACION.md distingue código publicado, interfaz estática y aplicación completa. No se desplegó ni habilitó facturación.
 
 Cuenta GitHub comprobada: luz-dari-c. Se prepara el commit inicial con su identidad y fecha real, sin inventar historial. La creación pública de ObraPlan quedó pendiente de confirmación explícita de visibilidad/destino requerida por revisión automática; todavía no se creó repositorio ni se subieron archivos.
+
+## 10 de octubre de 2026 — Publicación confirmada en GitHub
+
+El usuario confirmó explícitamente la publicación pública en luz-dari-c/ObraPlan. El repositorio ya creado se comprobó mediante GitHub y se subieron los commits locales a main. Se verificaron README y AgentTeam mediante el conector, y git ls-remote confirmó que el commit remoto coincidía con el local. Se añadió al README la URL real y el comando de clonación. La aplicación desplegada en una URL sigue pendiente; la publicación de código no se presenta como despliegue funcional.

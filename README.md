@@ -6,6 +6,8 @@ ObraPlan permite responder qué materiales necesita una obra, cuándo gestionarl
 
 Proyecto desarrollado por **Luz Dari Crespo Gómez**. El planteamiento, requisitos, decisiones y evidencias están documentados en este repositorio.
 
+Código fuente: [luz-dari-c/ObraPlan](https://github.com/luz-dari-c/ObraPlan).
+
 ## Qué puedes hacer
 
 - Crear una cuenta y administrar tus propias obras.
@@ -48,6 +50,8 @@ Necesitas **JDK 21**, Git y PowerShell en Windows. Python **3.11 o superior** se
 Clona este repositorio, entra en su carpeta y prepara tu configuración local:
 
 ```powershell
+git clone https://github.com/luz-dari-c/ObraPlan.git
+cd ObraPlan
 Copy-Item config/integrations.example.json config/integrations.json
 ./run.ps1
 ```
