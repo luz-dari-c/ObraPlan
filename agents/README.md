@@ -2,7 +2,7 @@
 
 Este directorio reúne las fichas de roles y el agente Python ejecutable. El código de los especialistas de la aplicación está en `src/main/java/co/obraplan/agents/`.
 
-Los agentes IA durante el uso se definen en `src/main/java/co/obraplan/agents/ai/AgentTeam.java`: coordinador y especialistas de Logística, Costos y Conocimiento. `WorkAgentTools.java` delimita herramientas/datos por obra, y `GeminiClient.java` llama al proveedor. Son contextos independientes con un modelo compartido. Activación y demostración en `docs/IA_CONFIGURACION.md`; conexión real pendiente de clave y consulta.
+Los agentes IA durante el uso se definen en `src/main/java/co/obraplan/agents/ai/AgentTeam.java`: coordinador y especialistas de Logística, Costos y Conocimiento. `WorkAgentTools.java` delimita herramientas/datos por obra, y `GeminiClient.java` llama al proveedor. Son contextos independientes con un modelo compartido. Activación y demostración en `docs/IA_CONFIGURACION.md`; cada instalación requiere su propia clave y una consulta exitosa para comprobar la conexión.
 
 | Agente | Tipo | Implementación / skill | Resultado |
 |---|---|---|---|
@@ -14,4 +14,8 @@ Los agentes IA durante el uso se definen en `src/main/java/co/obraplan/agents/ai
 | Seguimiento | Componente Java por reglas | `agents/TrackingAgent.java` | Entregas que requieren revisión |
 | Conocimiento | Componente Java + herramienta Python | `agents/KnowledgeAgent.java`, `agents/knowledge_agent.py` | Consulta con fuentes, relaciones y actualización de notas |
 
-Los roles de trabajo son instrucciones reutilizables para un asistente; no son procesos autónomos permanentemente activos. Los especialistas Java no utilizan un LLM. El agente Python funciona con recuperación local y ofrece un modo LLM opcional mediante Ollama cuando existe un modelo instalado. Los agentes originales del profesor aún no están localizados: `config/integrations.json` registra ese estado sin simular su ejecución.
+## Cómo se ejecutan
+
+Al pulsar **Consultar agentes**, el coordinador IA interpreta la pregunta con Gemini y puede delegar a Logística, Costos y Conocimiento. Cada agente tiene instrucciones, historial y herramientas propios. La interfaz muestra las consultas, herramientas, fuentes y consumo de la ejecución.
+
+Las clases de cálculo (`LogisticsAgent`, `CostAgent` y `TrackingAgent`) aplican reglas deterministas y sirven como herramientas para los agentes IA. Las skills organizan el desarrollo del proyecto. La herramienta Python recupera notas y relaciones localmente y dispone de un modo opcional con Ollama cuando hay un modelo instalado.

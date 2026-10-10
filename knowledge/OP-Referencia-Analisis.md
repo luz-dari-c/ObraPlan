@@ -6,7 +6,7 @@ tags: [obraplan, fuente]
 
 # Referencia local: proceso de análisis v0.4
 
-Recepción, necesidad, requisitos, reglas, revisión y evidencia. Referencia local no atribuida al profesor sin prueba.
+Recepción, necesidad, requisitos, reglas, revisión y evidencia. Referencia metodológica local para documentar el análisis.
 
 ## Fuente
 

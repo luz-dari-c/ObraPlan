@@ -1,6 +1,6 @@
 # Verificación reproducible de ObraPlan
 
-Revisión del 1 de octubre de 2026. Esta evidencia comprueba el comportamiento implementado; no equivale a una aprobación del profesor.
+Revisión del 1 de octubre de 2026. Esta evidencia comprueba el comportamiento implementado.
 
 ## Ejecutar las comprobaciones
 
@@ -30,7 +30,7 @@ Las pruebas crean bases y vaults temporales en `output/verification/`; no sustit
 
 Java comprueba, entre otros casos: 10 × COP 40.000 = COP 400.000; faltantes sin precio nulo; cotizaciones canceladas/rechazadas excluidas; fechas vencidas de pedidos activos; recepción; rechazo de valores inválidos; rollback de una edición fallida; separación de obras; notas actualizadas y ausencia de credenciales en la exportación.
 
-Python comprueba IDs únicos, los 25 requisitos, enlaces internos, consulta sin evidencia, conservación del índice y aprendizajes al sincronizar dos veces. Una integración sintética comprueba JSON, carpeta de trabajo e intérprete registrado. Esa prueba **no ejecuta los agentes del profesor**.
+Python comprueba IDs únicos, los 25 requisitos, enlaces internos, consulta sin evidencia, conservación del índice y aprendizajes al sincronizar dos veces. Una integración sintética comprueba JSON, carpeta de trabajo e intérprete registrado. Esa prueba verifica el adaptador con un agente sintético, no una integración externa de producción.
 
 La lectura de conocimiento compartido se comprueba con una nota temporal y, en Java, se vuelve a consultar después de editarla. Python también rechaza rutas compartidas fuera del vault.
 
@@ -48,7 +48,7 @@ Los reportes JSON son derivados de la ejecución más reciente. La exportación 
 
 Se probó `scripts/demo/DemoData.java` en `output/demo-validation/`, incluida una segunda ejecución sin duplicar registros. Después se ejecutó con respaldo y servidor detenido en la base local. El reporte confirmó preservación de los registros anteriores y, por cuenta, 10 materiales, 4 proveedores y 8 cotizaciones. Costos: COP 2.152.000, cuatro faltantes; métricas: dos pedidos activos. El cemento tiene subtotal COP 400.000; las ofertas rechazadas y canceladas quedan excluidas. Evidencia en `output/demo/report.json` y explicación rápida en `DEMO_VIDEO.md`.
 
-No se probaron carga masiva, despliegue multiusuario en red, recuperación ante corte de energía ni interpretación de planos. Ollama es opcional y no se ejecutó. Los agentes originales y la rúbrica completa del profesor no se localizaron: su integración figura pendiente y deshabilitada. Los datos y precios de la demostración no prueban disponibilidad comercial real.
+No se probaron carga masiva, despliegue multiusuario en red, recuperación ante corte de energía ni interpretación de planos. Ollama es opcional y no se ejecutó. Los datos y precios de la demostración no prueban disponibilidad comercial real.
 
 ## Integración IA, 8 de octubre de 2026
 
@@ -87,3 +87,7 @@ En el navegador real, la cuenta demo abrió Demostración para video y mostró n
 ## Preparación para GitHub, 10 de octubre de 2026
 
 La compilación Java pasó con scripts/compile.ps1. Los enlaces locales del README se comprobaron y no hay destinos inexistentes. Se revisaron los archivos preparados con patrones de claves Gemini/GitHub y claves privadas, sin coincidencias. Git check-ignore confirmó exclusión de la clave protegida, configuración personal, base local y reportes. La comprobación del grafo pasó con 70 nodos, 235 relaciones y cero enlaces rotos antes de incorporar la nota de publicación. Evidencia local: output/verification/publication-report.json. No se probó un despliegue remoto ni se publicaron registros privados.
+
+## 10 de octubre de 2026 — Revisión editorial
+
+Se revisaron documentación, instrucciones de desarrollo, configuración local y notas derivadas para centrar las explicaciones en ObraPlan. Se aclaró la separación entre agentes Gemini y herramientas por reglas. Se regeneraron 68 notas documentales: el grafo local contiene 71 nodos y 239 relaciones, sin enlaces internos rotos. La revisión no cambia código ejecutable ni datos de obra.

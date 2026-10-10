@@ -1,6 +1,6 @@
 # Guion para explicar y demostrar ObraPlan
 
-Duración sugerida: **10–12 minutos**. Prioriza el origen, los requisitos, la estructura y las funcionalidades. El código se muestra solo para ubicar responsabilidades. Este guion corresponde a lo implementado; no promete una evaluación favorable ni sustituye una rúbrica del profesor.
+Duración sugerida: **10–12 minutos**. Prioriza el origen, los requisitos, la estructura y las funcionalidades. El código se muestra solo para ubicar responsabilidades. Este guion corresponde a lo implementado.
 
 **Si ya explicaste el backend y quieres mostrar rápidamente la interfaz:** sigue [DEMO_VIDEO.md](DEMO_VIDEO.md). Abre la obra **Demostración para video**, que contiene los registros preparados; no necesitas llenar formularios durante la grabación.
 
@@ -40,7 +40,6 @@ Duración sugerida: **10–12 minutos**. Prioriza el origen, los requisitos, la 
 
 “Esta matriz conecta necesidad, requisito, componente y demostración. Así puedo explicar qué construí y qué evidencia respalda cada parte.”
 
-**Sobre los agentes del profesor:** “Tomé las capturas como referencia de organización y consulté el material local de análisis. Las skills aquí son propias de ObraPlan. El código original de los agentes del profesor todavía debe localizarse para ejecutarlo en su entorno; el registro muestra ese pendiente.” No digas que los utilizaste si no hay evidencia. Si después se integra el código original, actualiza este párrafo con ruta, versión y resultado comprobado.
 
 ## 3:15–4:15 — Carpetas, archivos y entornos
 

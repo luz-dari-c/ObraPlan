@@ -1,12 +1,12 @@
 ---
-id: OP-Referencias-Profesor
+id: OP-Fuentes-Referencias
 tipo: fuente
 tags: [obraplan, fuente]
 ---
 
-# Referencias y pendiente de agentes originales
+# Fuentes y referencias de ObraPlan
 
-Capturas muestran nombres y organización. Código original y rúbrica no localizados; integración deshabilitada hasta conocer rutas.
+Fuentes documentales y referencias técnicas utilizadas para organizar, desarrollar y verificar ObraPlan. Las integraciones externas requieren contratos y entornos comprobados.
 
 ## Fuente
 

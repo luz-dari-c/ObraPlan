@@ -10,7 +10,7 @@ Lee `README.md`, `COMO_SE_HACEN_LAS_COSAS.md` y `docs/BITACORA.md` antes de camb
 | Cambiar alcance, requisitos, reglas o aceptación | `.agents/skills/obraplan-requisitos/SKILL.md` | `docs/ANALISIS.md`, `docs/TRAZABILIDAD.md` |
 | Alimentar/consultar memoria y relaciones | `.agents/skills/obraplan-conocimiento/SKILL.md` | `knowledge/`, namespace de Obsidian y evidencia |
 
-Son skills propias. No las atribuyas al profesor. Los agentes Java ejecutables están separados en `src/main/java/co/obraplan/agents/`; la herramienta Python está en `agents/knowledge_agent.py`. Una skill indica cómo trabajar; no es por sí sola un proceso en ejecución.
+Son skills propias de ObraPlan. Los agentes Java ejecutables están separados en `src/main/java/co/obraplan/agents/`; la herramienta Python está en `agents/knowledge_agent.py`. Una skill indica cómo trabajar; no es por sí sola un proceso en ejecución.
 
 ## Contexto y reglas que se deben conservar
 
@@ -19,7 +19,7 @@ Son skills propias. No las atribuyas al profesor. Los agentes Java ejecutables e
 - Sin precio significa nulo; Costos excluye Rechazada/Cancelado. Seguimiento evalúa solo pedidos en curso.
 - Autorización por propietario y obra también para conocimiento. No exportar usuarios, hashes o sesiones al vault.
 - Notas generadas: derivadas del catálogo/requisitos o de la base. Aprendizajes: área editable que no se sobrescribe.
-- `config/integrations.json` registra integraciones. El agente del profesor permanece deshabilitado mientras no haya rutas/contrato comprobados.
+- `config/integrations.json` registra integraciones. Las integraciones externas permanecen deshabilitadas mientras no haya rutas y contratos comprobados.
 - No importes dependencias de otro entorno: usa el adaptador de subproceso con intérprete/cwd explícitos y JSON.
 
 ## Memoria y cierre de cambios

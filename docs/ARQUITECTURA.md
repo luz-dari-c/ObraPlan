@@ -65,7 +65,7 @@ El sistema web usa JDK 21. El agente de conocimiento Python usa biblioteca está
 
 ## Límites de esta arquitectura
 
-Es una entrega local con JSON y sesiones en memoria. La capa de coordinación IA necesita una clave y una consulta real para comprobar la conexión; no se afirma escalabilidad de producción ni aprobación del profesor. Un fallo al publicar notas se informa en la vista y permite reintentar; no se pierde la operación ya guardada. La sincronización es una proyección del estado actual, no una copia de seguridad de la base.
+Es una entrega local con JSON y sesiones en memoria. La capa de coordinación IA necesita una clave y una consulta real para comprobar la conexión; no se afirma escalabilidad de producción ni validación de producción. Un fallo al publicar notas se informa en la vista y permite reintentar; no se pierde la operación ya guardada. La sincronización es una proyección del estado actual, no una copia de seguridad de la base.
 # Capa de agentes de IA incorporada el 8 de octubre de 2026
 
 Interfaz `assistant.js` → Server autenticado → WorkAgentTools por propietario/obra → AgentTeam → GeminiClient REST. El coordinador y los tres especialistas tienen historiales independientes y herramientas diferentes. Gemini decide la delegación y las consultas; Java ejecuta herramientas autorizadas y devuelve observaciones al modelo. Los cálculos existentes siguen siendo deterministas.

@@ -49,7 +49,7 @@
         ],
         "consulta": [
           "OP-Referencia-Analisis",
-          "OP-Referencias-Profesor"
+          "OP-Fuentes-Referencias"
         ]
       }
     },
@@ -428,7 +428,7 @@
       "relations": {
         "documenta": [
           "OP-Proyecto",
-          "OP-Referencias-Profesor"
+          "OP-Fuentes-Referencias"
         ],
         "sustentada_por": [
           "OP-Verificacion"
@@ -520,7 +520,7 @@
       "title": "Referencia local: proceso de análisis v0.4",
       "type": "fuente",
       "source": "C:/Users/ASUS/OneDrive/Documentos/ChatGPT/Definicion Proceso de Analisis/08_Propuesta_integrada_v0.4/02_Proceso_operativo.md",
-      "summary": "Recepción, necesidad, requisitos, reglas, revisión y evidencia. Referencia local no atribuida al profesor sin prueba.",
+      "summary": "Recepción, necesidad, requisitos, reglas, revisión y evidencia. Referencia metodológica local para documentar el análisis.",
       "relations": {
         "orienta": [
           "OP-Rol-Problema",
@@ -550,11 +550,11 @@
       }
     },
     {
-      "id": "OP-Referencias-Profesor",
-      "title": "Referencias y pendiente de agentes originales",
+      "id": "OP-Fuentes-Referencias",
+      "title": "Fuentes y referencias de ObraPlan",
       "type": "fuente",
       "source": "docs/FUENTES_Y_REFERENCIAS.md",
-      "summary": "Capturas muestran nombres y organización. Código original y rúbrica no localizados; integración deshabilitada hasta conocer rutas.",
+      "summary": "Fuentes documentales y referencias técnicas utilizadas para organizar, desarrollar y verificar ObraPlan. Las integraciones externas requieren contratos y entornos comprobados.",
       "relations": {
         "orienta": [
           "OP-Proyecto"

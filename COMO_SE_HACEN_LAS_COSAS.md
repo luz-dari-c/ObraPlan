@@ -110,7 +110,7 @@ Contrato: recibe un objeto JSON por stdin y devuelve un objeto JSON por stdout; 
 python agents/knowledge_agent.py external ID_REGISTRADO ruta/solicitud.json
 ```
 
-La referencia de análisis disponible apunta a `C:\Users\ASUS\OneDrive\Documentos\ChatGPT\Definicion Proceso de Analisis\08_Propuesta_integrada_v0.4\02_Proceso_operativo.md`. Es documentación, no un agente ejecutable. El registro `agentes-profesor` permanece deshabilitado porque el código y el entorno original no fueron localizados.
+Las referencias metodológicas registradas son documentación. Los agentes externos solo se ejecutan cuando tienen un contrato y entorno verificados.
 
 ## Qué editar y qué regenerar
 

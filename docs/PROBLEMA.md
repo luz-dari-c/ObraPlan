@@ -20,7 +20,7 @@ La causa propuesta es la fragmentación de información y la falta de un seguimi
 
 ## Actores y objetivos
 
-El actor principal es el coordinador o responsable de la obra. Registra la información, consulta las recomendaciones y toma las decisiones. La ferretería es un proveedor externo cuyos datos y cotizaciones se registran manualmente; no accede a un portal ni recibe mensajes automáticos. El responsable técnico confirma cantidades y unidades cuando corresponda. El estudiante explica, demuestra y conserva evidencia del proyecto. El profesor evalúa la entrega, pero no se registra una aprobación suya inexistente.
+El actor principal es el coordinador o responsable de la obra. Registra la información, consulta las recomendaciones y toma las decisiones. La ferretería es un proveedor externo cuyos datos y cotizaciones se registran manualmente; no accede a un portal ni recibe mensajes automáticos. El responsable técnico confirma cantidades y unidades cuando corresponda. El responsable del proyecto documenta, demuestra y conserva evidencia de la solución.
 
 El objetivo general es construir una bitácora de adquisiciones que reúna materiales por etapa, proveedores, cotizaciones y pedidos, con análisis comprensible y memoria de conocimiento conectada a Obsidian. Los objetivos específicos son identificar materiales pendientes, calcular fechas orientativas de gestión, conservar el costo conocido con sus faltantes, seguir el ciclo del pedido y relacionar problema, requisitos, componentes y evidencias.
 
@@ -30,7 +30,7 @@ El rol de **planteamiento del problema** convierte la idea en contexto, actores,
 
 Después se construyen especialistas de la aplicación: Logística calcula fechas, Costos calcula subtotales, Seguimiento revisa entregas y el Orquestador reúne los resultados. Conocimiento publica y consulta notas relacionadas. Son componentes Java con reglas explícitas. La herramienta Python recupera evidencia del grafo y puede usar un modelo Ollama instalado si se activa ese modo. Esta separación permite explicar tanto el proceso de construcción como el comportamiento real de la aplicación.
 
-Los agentes originales del profesor no aparecieron en las carpetas revisadas. Se registra esa ausencia en `FUENTES_Y_REFERENCIAS.md` y `config/integrations.json`. Las skills entregadas son propias de ObraPlan; no se presentan como archivos del profesor ni como ejecuciones históricas de sus agentes.
+Las skills de ObraPlan organizan el trabajo de planteamiento, requisitos y conocimiento. Los agentes IA de la aplicación se ejecutan mediante Gemini; las integraciones externas requieren rutas, entornos y contratos comprobados.
 
 ## Resultado esperado y límites
 

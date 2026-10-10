@@ -11,4 +11,4 @@ Mantén `ANALISIS.md` como fuente canónica: IDs RF/RNF estables, conducta y cri
 
 Conserva las reglas de costos sin precio nulo y exclusión Rechazada/Cancelado, logística por fecha menos plazo y seguimiento solo de pedidos en curso. Evalúa autorización, integridad y efecto de un fallo cuando cambie una integración.
 
-Actualiza trazabilidad y bitácora. Ejecuta `python scripts/build_knowledge.py` y `python scripts/sync_knowledge.py --check` para que las notas deriven de los requisitos. Registra comprobaciones reales en `docs/VERIFICACION.md`. No atribuyas esta skill ni una reconstrucción de análisis a ejecuciones de agentes originales del profesor.
+Actualiza trazabilidad y bitácora. Ejecuta `python scripts/build_knowledge.py` y `python scripts/sync_knowledge.py --check` para que las notas deriven de los requisitos. Registra comprobaciones reales en `docs/VERIFICACION.md`. Distingue las instrucciones de desarrollo de las ejecuciones comprobadas de los agentes IA.

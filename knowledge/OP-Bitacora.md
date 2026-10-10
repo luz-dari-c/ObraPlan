@@ -17,5 +17,5 @@ Nota derivada. Actualiza su fuente y ejecuta `python scripts/build_knowledge.py`
 ## Relaciones
 
 - documenta:: [[OP-Proyecto]]
-- documenta:: [[OP-Referencias-Profesor]]
+- documenta:: [[OP-Fuentes-Referencias]]
 - sustentada_por:: [[OP-Verificacion]]

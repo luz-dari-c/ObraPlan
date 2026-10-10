@@ -28,7 +28,7 @@ Estos componentes son módulos deterministas por reglas. Su separación por sí 
 | Análisis de requisitos | `.agents/skills/obraplan-requisitos/SKILL.md` | RF/RNF, reglas, aceptación y trazabilidad |
 | Curador de conocimiento | `.agents/skills/obraplan-conocimiento/SKILL.md` | Consulta previa, relaciones y publicación conservando aprendizajes |
 
-Una skill contiene instrucciones para el asistente; no es un servicio permanentemente activo. `AGENTS.md` orienta su selección y `COMO_SE_HACEN_LAS_COSAS.md` localiza sus fuentes. Son skills creadas para ObraPlan; no se atribuyen al profesor.
+Una skill contiene instrucciones para el asistente; no es un servicio permanentemente activo. `AGENTS.md` orienta su selección y `COMO_SE_HACEN_LAS_COSAS.md` localiza sus fuentes. Son skills creadas para continuar el desarrollo de ObraPlan.
 
 ## Agente Python de conocimiento
 
@@ -42,8 +42,6 @@ Una skill contiene instrucciones para el asistente; no es un servicio permanente
 
 La consulta web ofrece recuperación con extractos y navegación de relaciones dentro de la obra autorizada. La herramienta Python es local y opera con permisos del usuario del computador; no tiene autenticación de usuarios web propia.
 
-## Integración con agentes del profesor
+## Integraciones externas
 
-El registro contiene un espacio deshabilitado `agentes-profesor`. Falta localizar código, entorno, versión y contrato. Las capturas muestran la estructura, no esos archivos. El material local de análisis aporta una referencia metodológica; no demuestra ejecución de un agente del profesor.
-
-Cuando esté disponible, se registra su ruta real y se adapta a JSON si lo necesita. Las salidas se guardan con procedencia en output y se conectan a requisitos/notas. Un ensayo sintético del adaptador comprueba aislamiento de cwd/intérprete, pero no equivale a haber probado el agente original.
+`config/integrations.json` permite registrar agentes externos con raíz, intérprete, punto de entrada y contrato JSON. Se habilitan después de comprobar su funcionamiento. El adaptador conserva el entorno de cada agente mediante un subproceso con carpeta de trabajo e intérprete explícitos. Las salidas verificadas pueden conectarse a requisitos y notas del proyecto.

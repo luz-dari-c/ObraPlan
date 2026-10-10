@@ -9,4 +9,4 @@ Lee `COMO_SE_HACEN_LAS_COSAS.md`, `docs/PROBLEMA.md` y `docs/FUENTES_Y_REFERENCI
 
 Reúne contexto, situación actual, problema central, actores, objetivo y alcance. Separa hechos del repositorio, hipótesis del caso académico y preguntas pendientes. No inventes entrevistas, mediciones ni aprobaciones. El producto actual se centra en adquisiciones manuales; cantidades estructurales, planos y 3D requieren un cambio de alcance explícito.
 
-Actualiza `docs/PROBLEMA.md` con una explicación entendible sin código. Entrega necesidades identificadas al rol de requisitos y conserva la decisión de alcance en `docs/BITACORA.md`. Regenera notas con `scripts/build_knowledge.py` cuando cambie el fundamento. Esta skill es propia de ObraPlan, no un agente original del profesor.
+Actualiza `docs/PROBLEMA.md` con una explicación entendible sin código. Entrega necesidades identificadas al rol de requisitos y conserva la decisión de alcance en `docs/BITACORA.md`. Regenera notas con `scripts/build_knowledge.py` cuando cambie el fundamento. Esta skill es propia de ObraPlan.

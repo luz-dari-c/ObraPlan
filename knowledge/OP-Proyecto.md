@@ -24,4 +24,4 @@ Nota derivada. Actualiza su fuente y ejecuta `python scripts/build_knowledge.py`
 - coordina:: [[OP-IA-Coordinador]]
 - se_explica_en:: [[OP-Guion-Video]]
 - consulta:: [[OP-Referencia-Analisis]]
-- consulta:: [[OP-Referencias-Profesor]]
+- consulta:: [[OP-Fuentes-Referencias]]

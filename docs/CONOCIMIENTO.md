@@ -57,7 +57,7 @@ El archivo JSON es una exportación para herramientas, no un requisito para que 
 
 ## Mantener las relaciones
 
-Usa IDs únicos, enlaces que apunten a notas existentes y una relación con significado. Ejecuta `sync_knowledge.py --check` para detectar destinos internos inexistentes. No presentes una nota provisional como validación del profesor ni una regla documental como acción comercial ejecutada.
+Usa IDs únicos, enlaces que apunten a notas existentes y una relación con significado. Ejecuta `sync_knowledge.py --check` para detectar destinos internos inexistentes. Distingue notas provisionales de resultados verificados y reglas documentales de acciones comerciales ejecutadas.
 ## Análisis generados durante el uso
 
 El especialista de Conocimiento IA consulta extractos y relaciones de la obra mediante WorkAgentTools. Los agentes y requisitos nuevos se relacionan en el catálogo con herramientas, reglas y evidencia. No basta almacenar notas para que exista razonamiento IA: el modelo decide cuándo consultar esas herramientas durante una ejecución.

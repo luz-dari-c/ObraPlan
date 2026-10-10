@@ -11,4 +11,4 @@ Conceptos/relaciones documentales se editan en `knowledge/catalog.json`; RF/RNF 
 
 No cambies manualmente notas operativas para modificar la base. La aplicación las publica después de guardar datos. Los apuntes personales van en `Proyectos/ObraPlan/Aprendizajes/`, que no se sobrescribe. Evita exportar usuarios, hashes, sesiones, teléfonos o direcciones de proveedores.
 
-Un agente externo se registra con raíz, intérprete, entrypoint y contrato JSON real. Usa el adaptador de subproceso; no mezcles paquetes ni ejecutes una integración deshabilitada. Si el agente del profesor no está localizado, conserva el pendiente. Registra evidencia de sincronización/consulta en output y decisiones en la bitácora.
+Un agente externo se registra con raíz, intérprete, entrypoint y contrato JSON real. Usa el adaptador de subproceso; no mezcles paquetes ni ejecutes una integración deshabilitada. Habilita una integración externa solo después de comprobar su ubicación y contrato. Registra evidencia de sincronización/consulta en output y decisiones en la bitácora.

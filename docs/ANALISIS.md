@@ -8,7 +8,7 @@ Necesidades: N-01 organizar información, N-02 gestionar a tiempo, N-03 conocer 
 
 Incluye acceso local, obras, materiales, directorio, cotizaciones, pedidos, filtros, cálculos explícitos, alertas, actividad, persistencia, agentes visibles y consulta/grafo de conocimiento.
 
-Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3D, WhatsApp/correos automáticos, inventario/precios en vivo, pagos, compras comerciales y recuperación de contraseña por correo. No se afirma ejecución de agentes originales del profesor no localizados.
+Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3D, WhatsApp/correos automáticos, inventario/precios en vivo, pagos, compras comerciales y recuperación de contraseña por correo.
 
 ## Requisitos funcionales y aceptación
 

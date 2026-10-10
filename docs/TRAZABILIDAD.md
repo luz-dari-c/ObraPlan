@@ -24,7 +24,7 @@ Los requisitos canónicos están en `ANALISIS.md`; esta tabla explica dónde se 
 | RNF-06 Aislamiento | Sin sesión: 401; obra de otro usuario: 404; grafo sin usuarios/hashes |
 | RNF-07 Usabilidad | Recorrido de interfaz a ancho de escritorio y móvil |
 | RNF-08 Evidencia | Fuentes, bitácora, reportes y pendientes explícitos |
-| RNF-09 Entornos | Prueba del adaptador con intérprete/cwd propios; profesor pendiente de localizar |
+| RNF-09 Entornos | Prueba del adaptador con intérprete/cwd propios; integraciones externas requieren configuración comprobada |
 | RNF-10 Memoria editable | Sincronizar dos veces: índice único y aprendizajes conservados |
 
 ## Lo solicitado por el usuario y visible en las capturas
@@ -41,4 +41,4 @@ Los requisitos canónicos están en `ANALISIS.md`; esta tabla explica dónde se 
 | Aplicación funcional | Navegador local | Caso completo de adquisición |
 | Guion explicativo | GUIA_VIDEO.md | Narración, clics y resultados esperados |
 
-Esta es una matriz de correspondencia con la solicitud, no una rúbrica oficial ni una aprobación del profesor. Para incorporar sus agentes originales falta su ubicación y contrato.
+Esta matriz relaciona necesidades, requisitos, componentes y evidencia observable de ObraPlan.

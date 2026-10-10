@@ -25,7 +25,7 @@ Esta bitácora registra decisiones del desarrollo. La **actividad reciente** de 
 
 **Cierre de comprobación:** 33 verificaciones Java, 15 Python y 7 HTTP correctas; tres skills validadas. Obsidian reconoce las notas y conexiones. La revisión a 390 px detectó y corrigió un desbordamiento del selector/panel del grafo. Código formateado con Google Java Format, Prettier y Ruff; herramientas de formato en output, fuera de las dependencias de ejecución.
 
-**Pendiente:** localizar los agentes originales del profesor y confirmar su contrato/entorno. No se marca una integración pendiente como realizada.
+**Integraciones externas:** requieren código, contrato y entorno comprobados antes de habilitarse.
 
 ## 2 de octubre de 2026 — Registros preparados para el video
 
@@ -96,3 +96,7 @@ Cuenta GitHub comprobada: luz-dari-c. Se prepara el commit inicial con su identi
 ## 10 de octubre de 2026 — Publicación confirmada en GitHub
 
 El usuario confirmó explícitamente la publicación pública en luz-dari-c/ObraPlan. El repositorio ya creado se comprobó mediante GitHub y se subieron los commits locales a main. Se verificaron README y AgentTeam mediante el conector, y git ls-remote confirmó que el commit remoto coincidía con el local. Se añadió al README la URL real y el comando de clonación. La aplicación desplegada en una URL sigue pendiente; la publicación de código no se presenta como despliegue funcional.
+
+## 10 de octubre de 2026 — Revisión de documentación pública
+
+Se revisó la documentación para centrarla en ObraPlan, sus componentes e integraciones comprobadas. Se aclaró la distinción entre agentes Gemini, herramientas deterministas y skills de desarrollo. Las fuentes y relaciones documentales se mantienen bajo OP-Fuentes-Referencias. Esta revisión editorial no modifica adquisiciones ni comportamiento de la aplicación.
