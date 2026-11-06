@@ -42,3 +42,11 @@ Los requisitos canónicos están en `ANALISIS.md`; esta tabla explica dónde se 
 | Guion explicativo | GUIA_VIDEO.md | Narración, clics y resultados esperados |
 
 Esta matriz relaciona necesidades, requisitos, componentes y evidencia observable de ObraPlan.
+
+## Evolución de noviembre de 2026
+
+| Necesidad | Requisito | Componente | Comprobación |
+|---|---|---|---|
+| Consultar referencias comerciales | RF-20 | CatalogoPublico, catalogo.js | Dos tiendas, fuente/fecha/moneda; USD no se prepara como COP; usuario confirma material/proveedor |
+| Conservar trabajo al desplegar | RF-21, RNF-05 | AlmacenPostgres, Autenticacion, MigrarDatos | SQL real: rollback, concurrencia, sesión tras reinicio y revocación; migración a destino vacío y respaldo restaurado |
+| Comprender y recorrer el producto | RF-19, RNF-07 | minimal.css, welcome.js | Guía recogida con registros, abierta sin materiales; navegación de catálogo y acceso HTTPS |

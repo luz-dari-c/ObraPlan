@@ -7,7 +7,6 @@ import co.obraplan.agents.Orchestrator;
 import java.net.URI;
 import java.time.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 final class AppService {
     private final Database db;
@@ -22,7 +21,8 @@ final class AppService {
         db.onCommit(knowledge::record);
         knowledge.record(db.read());
         for (var analisis : db.readList("analyses")) {
-            knowledge.saveAnalysis(analisis.get("workId").toString(), Json.object(analisis.get("result")));
+            knowledge.saveAnalysis(
+                    analisis.get("workId").toString(), Json.object(analisis.get("result")));
         }
     }
 
@@ -42,13 +42,16 @@ final class AppService {
     Map<String, Object> saveAnalysis(
             Map<String, Object> user, String workId, Map<String, Object> result) {
         work(user, workId);
-        db.write(estado -> {
-            estado.computeIfAbsent("analyses", clave -> new ArrayList<>());
-            List<Map<String, Object>> lista = maps(estado, "analyses");
-            lista.removeIf(item -> Objects.equals(item.get("id"), result.get("runId")));
-            lista.add(Json.map("id", result.get("runId"), "workId", workId, "result", result));
-            return null;
-        });
+        db.write(
+                estado -> {
+                    estado.computeIfAbsent("analyses", clave -> new ArrayList<>());
+                    List<Map<String, Object>> lista = maps(estado, "analyses");
+                    lista.removeIf(item -> Objects.equals(item.get("id"), result.get("runId")));
+                    lista.add(
+                            Json.map(
+                                    "id", result.get("runId"), "workId", workId, "result", result));
+                    return null;
+                });
         return knowledge.saveAnalysis(workId, result);
     }
 

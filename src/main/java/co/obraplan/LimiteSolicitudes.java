@@ -7,6 +7,7 @@ import java.util.Map;
 /** Límite por origen para operaciones costosas; no almacena datos de formularios. */
 final class LimiteSolicitudes {
     private record Ventana(long minuto, int cantidad) {}
+
     private final Map<String, Ventana> ventanas = new HashMap<>();
 
     synchronized boolean permitir(String clave, int maximo) {

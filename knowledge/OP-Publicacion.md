@@ -6,7 +6,7 @@ tags: [obraplan, documentacion]
 
 # Publicación en GitHub y despliegue
 
-Código y documentación publicables sin claves ni datos de usuarios. Vercel Container Runtime admite Java en beta; un despliegue estable necesita persistencia externa, sesiones y escucha adaptadas. No hay URL remota verificada.
+Aplicación pública en https://obraplan.onrender.com; interfaz y API juntas en Render Free, PostgreSQL externo en Neon Free. Credenciales fuera de Git; arranque en frío y cuotas sin SLA. Operación y límites documentados.
 
 ## Fuente
 

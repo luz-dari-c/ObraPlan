@@ -8,7 +8,7 @@ tags: [obraplan, requisito]
 
 Seguridad local y aislamiento por obra.
 
-Criterio observable: Loopback, PBKDF2, cookie HttpOnly/SameSite; conocimiento exige propietario y no exporta hashes/sesiones.
+Criterio observable: Loopback en desarrollo; HTTPS y cookie Secure en producción; PBKDF2 y cookie HttpOnly/SameSite; conocimiento exige propietario y no exporta hashes/sesiones.
 
 ## Fuente
 

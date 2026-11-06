@@ -91,3 +91,15 @@ La compilación Java pasó con scripts/compile.ps1. Los enlaces locales del READ
 ## 10 de octubre de 2026 — Revisión editorial
 
 Se revisaron documentación, instrucciones de desarrollo, configuración local y notas derivadas para centrar las explicaciones en ObraPlan. Se aclaró la separación entre agentes Gemini y herramientas por reglas. Se regeneraron 68 notas documentales: el grafo local contiene 71 nodos y 239 relaciones, sin enlaces internos rotos. La revisión no cambia código ejecutable ni datos de obra.
+
+## 5 de noviembre de 2026 — Persistencia, catálogos y publicación
+
+Regresión: 33 comprobaciones Java, 24 de coordinación IA con proveedor simulado, 15 Python y 9 HTTP de IA correctas. Se utilizaron bases y vaults temporales. Las dos advertencias de vault inexistente corresponden a escenarios de fallo simulado, no al vault personal.
+
+PostgreSQL 18 real en clúster aislado: sesión recuperada por otra instancia, rollback sin cambios, doce escrituras concurrentes sin pérdidas y cierre de sesión compartido. Migración real a Neon: 2 cuentas, 8 obras, 29 materiales, 21 proveedores, 19 cotizaciones y 96 actividades en el momento de migrar. El JSON original conserva SHA-256 549B6C8311C209BF9E64A14DD803FE139C69134DFFDBC8A1F28CA1B5C890831E. Un pg_dump se restauró en base aislada y coincidieron los conteos de entidades de negocio; sesiones/análisis pueden cambiar después del instante del respaldo.
+
+Render compiló el contenedor y verificó SHA-256 del JDBC; primer despliegue Live. HTTPS, acceso a obra migrada, catálogo con 13 productos sin fallos de proveedor y configuración IA comprobados. Gemini real completó una consulta de Costos en cuatro llamadas y permitió conservar la propuesta en PostgreSQL sin Obsidian. No se afirma validación de todos los especialistas contra el proveedor real en esta revisión: su coordinación completa tiene pruebas simuladas y evidencia histórica separada.
+
+Flujo público con cuenta/obra aisladas: registro, obra/material/proveedor/cotización, conversión a pedido, rechazo de una obra ajena y rechazo de cantidad inválida. Se dejó un escenario identificado como verificación, sin añadir pruebas a obras del usuario. La cuenta histórica demo se protegió con contraseña nueva solo en nube porque contenía registros de uso real; credencial local ignorada por Git y sesiones previas revocadas.
+
+Evidencia privada: output/verification/cloud-http-report.json, cloud-ai-report.json, cloud-workflow-report.json y backup-restore-report.json. No publicar cookies, capturas de secretos ni respaldos. No se probaron carga masiva, SLA, compra real, disponibilidad comercial o sincronización bidireccional de la base local y remota.

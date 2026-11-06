@@ -25,4 +25,6 @@ Fuentes operativas consultadas: https://render.com/docs/free y https://neon.com/
 
 ## Estado
 
-En ejecución. Las comprobaciones y limitaciones finales se registrarán en VERIFICACION.md y BITACORA.md.
+Implementadas las etapas con arquitectura compatible: PostgreSQL externo, migración, sesiones durables, propuestas persistentes, instrucciones por rol, catálogos y diseño simplificado. Despliegue real en Render/Neon, ambos gratuitos. Las comprobaciones y limitaciones están en VERIFICACION.md y OPERACION.md.
+
+La normalización relacional completa y la separación total del servicio histórico quedan como evolución de escala: esta entrega aísla autenticación, configuración y almacenamiento sin romper contratos HTTP. No se anuncia como una reescritura total ni como capacidad de carga masiva comprobada.

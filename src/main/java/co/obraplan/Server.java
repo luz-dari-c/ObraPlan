@@ -41,7 +41,8 @@ public final class Server {
                                 .getOrDefault(
                                         "OBRAPLAN_STATIC",
                                         root.resolve("src/main/resources/static").toString()));
-        HttpServer server = HttpServer.create(new InetSocketAddress(Configuracion.interfazRed(), port), 0);
+        HttpServer server =
+                HttpServer.create(new InetSocketAddress(Configuracion.interfazRed(), port), 0);
         String vaultPath = System.getenv().getOrDefault("OBRAPLAN_VAULT", "");
         KnowledgeAgent knowledge =
                 new KnowledgeAgent(root, vaultPath.isBlank() ? null : Path.of(vaultPath));
@@ -54,8 +55,10 @@ public final class Server {
         System.out.println(
                 "ObraPlan disponible en http://127.0.0.1:"
                         + port
-                        + "  (datos: "
-                        + data.toAbsolutePath()
+                        + "  (almacenamiento: "
+                        + (System.getenv("DATABASE_URL") == null
+                                ? data.toAbsolutePath().toString()
+                                : "PostgreSQL")
                         + ")");
         Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop(0)));
     }
@@ -108,10 +111,20 @@ public final class Server {
             String reenviado = x.getRequestHeaders().getFirst("X-Forwarded-For");
             if (reenviado != null) cliente = reenviado.split(",")[0].trim();
         }
-        boolean sensible = p.equals("/api/auth/login") || p.equals("/api/auth/register") || p.endsWith("/catalog");
-        if (sensible && !limites.permitir(cliente + ":" + (p.endsWith("/catalog") ? "catalog" : "auth"), 20)) {
+        boolean sensible =
+                p.equals("/api/auth/login")
+                        || p.equals("/api/auth/register")
+                        || p.endsWith("/catalog");
+        if (sensible
+                && !limites.permitir(
+                        cliente + ":" + (p.endsWith("/catalog") ? "catalog" : "auth"), 20)) {
             x.getResponseHeaders().set("Retry-After", "60");
-            sendJson(x, 429, Json.map("error", "Hay demasiadas solicitudes. Espera un minuto y vuelve a intentar."));
+            sendJson(
+                    x,
+                    429,
+                    Json.map(
+                            "error",
+                            "Hay demasiadas solicitudes. Espera un minuto y vuelve a intentar."));
             return;
         }
         Map<String, Object> b = body(x);
@@ -170,10 +183,12 @@ public final class Server {
                 service.dashboard(user, wid); // Misma autorización de obra que los demás recursos.
                 String consulta = "";
                 String query = x.getRequestURI().getRawQuery();
-                if (query != null) for (String par : query.split("&")) {
-                    String[] partes = par.split("=", 2);
-                    if (partes.length == 2 && partes[0].equals("query")) consulta = decode(partes[1]);
-                }
+                if (query != null)
+                    for (String par : query.split("&")) {
+                        String[] partes = par.split("=", 2);
+                        if (partes.length == 2 && partes[0].equals("query"))
+                            consulta = decode(partes[1]);
+                    }
                 sendJson(x, 200, catalogo.buscar(consulta));
                 return;
             }
@@ -322,6 +337,12 @@ public final class Server {
                                 : "text/html; charset=utf-8";
         x.getResponseHeaders().set("Content-Type", type);
         byte[] bytes = Files.readAllBytes(resolved);
+        if (x.getRequestMethod().equals("HEAD")) {
+            x.getResponseHeaders().set("Content-Length", Integer.toString(bytes.length));
+            x.sendResponseHeaders(200, -1);
+            x.close();
+            return;
+        }
         x.sendResponseHeaders(200, bytes.length);
         try (OutputStream o = x.getResponseBody()) {
             o.write(bytes);
@@ -349,14 +370,24 @@ public final class Server {
     private void addHeaders(HttpExchange x) {
         x.getResponseHeaders().set("X-Content-Type-Options", "nosniff");
         x.getResponseHeaders().set("X-Frame-Options", "DENY");
-        x.getResponseHeaders().set("Content-Security-Policy", "default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'");
+        x.getResponseHeaders()
+                .set(
+                        "Content-Security-Policy",
+                        "default-src 'self'; img-src 'self' https: data:; style-src 'self'"
+                                + " 'unsafe-inline'; script-src 'self'; object-src 'none'; base-uri"
+                                + " 'self'; frame-ancestors 'none'");
         x.getResponseHeaders().set("Referrer-Policy", "strict-origin-when-cross-origin");
         x.getResponseHeaders().set("Cache-Control", "no-store");
     }
 
     private void session(HttpExchange x, String token) {
         x.getResponseHeaders()
-                .add("Set-Cookie", "OPSESSION=" + token + "; Path=/; HttpOnly; SameSite=Lax; Max-Age=43200" + (Configuracion.produccion() ? "; Secure" : ""));
+                .add(
+                        "Set-Cookie",
+                        "OPSESSION="
+                                + token
+                                + "; Path=/; HttpOnly; SameSite=Lax; Max-Age=43200"
+                                + (Configuracion.produccion() ? "; Secure" : ""));
     }
 
     private static String cookie(HttpExchange x, String name) {

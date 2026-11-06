@@ -8,6 +8,8 @@ Proyecto desarrollado por **Luz Dari Crespo Gómez**. El planteamiento, requisit
 
 Código fuente: [luz-dari-c/ObraPlan](https://github.com/luz-dari-c/ObraPlan).
 
+**Aplicación pública: [Abrir ObraPlan](https://obraplan.onrender.com)**. La primera visita tras inactividad puede tardar más de 50 segundos por el plan gratuito.
+
 ## Qué puedes hacer
 
 - Crear una cuenta y administrar tus propias obras.

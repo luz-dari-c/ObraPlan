@@ -230,7 +230,8 @@ public final class AgentTeam {
             history.add(Json.map("role", "user", "parts", List.of(Json.map("text", task))));
             List<Object> declarations = declarations(role);
             String instruction =
-                    COMMON + InstruccionesAgentes.contexto(role)
+                    COMMON
+                            + InstruccionesAgentes.contexto(role)
                             + "Fecha actual: "
                             + LocalDate.now()
                             + ". Tu rol: "

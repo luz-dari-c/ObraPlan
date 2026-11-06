@@ -53,3 +53,5 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
 .work-welcome[open] .welcome-toggle { margin-bottom: 20px; }
 .welcome-heading { display: none; }
 .welcome-step, .welcome-steps li { border-radius: 5px; }
+
+[hidden] { display: none !important; }

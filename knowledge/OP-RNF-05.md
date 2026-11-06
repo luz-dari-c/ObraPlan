@@ -8,7 +8,7 @@ tags: [obraplan, requisito]
 
 Persistencia y recuperación.
 
-Criterio observable: Reemplazo atómico; datos permanecen tras reinicio; fallo del grafo no borra operación guardada.
+Criterio observable: JSON local con reemplazo atómico; PostgreSQL con transacciones y bloqueo entre instancias; datos permanecen tras reinicio; fallo del grafo no borra operación guardada.
 
 ## Fuente
 

@@ -6,7 +6,7 @@ tags: [obraplan, componente]
 
 # Database: datos y cambios confirmados
 
-JSON con escritura atómica. Opera sobre una copia y notifica al agente de conocimiento después del guardado.
+Fachada compatible con JSON local y PostgreSQL transaccional. Notifica al conocimiento después del commit sin deshacer datos confirmados si falla una proyección.
 
 ## Fuente
 

@@ -177,7 +177,7 @@
       "title": "Database: datos y cambios confirmados",
       "type": "componente",
       "source": "src/main/java/co/obraplan/Database.java",
-      "summary": "JSON con escritura atómica. Opera sobre una copia y notifica al agente de conocimiento después del guardado.",
+      "summary": "Fachada compatible con JSON local y PostgreSQL transaccional. Notifica al conocimiento después del commit sin deshacer datos confirmados si falla una proyección.",
       "relations": {
         "implementa": [
           "OP-RF-12",
@@ -669,7 +669,7 @@
       "title": "Publicación en GitHub y despliegue",
       "type": "documentacion",
       "source": "docs/PUBLICACION.md",
-      "summary": "Código y documentación publicables sin claves ni datos de usuarios. Vercel Container Runtime admite Java en beta; un despliegue estable necesita persistencia externa, sesiones y escucha adaptadas. No hay URL remota verificada.",
+      "summary": "Aplicación pública en https://obraplan.onrender.com; interfaz y API juntas en Render Free, PostgreSQL externo en Neon Free. Credenciales fuera de Git; arranque en frío y cuotas sin SLA. Operación y límites documentados.",
       "relations": {
         "pertenece_a": [
           "OP-Proyecto"

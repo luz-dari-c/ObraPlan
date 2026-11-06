@@ -39,6 +39,10 @@ document.querySelector('#catalogo-resultados').addEventListener('click', (evento
   document.querySelector('#add-quote-btn').click();
   const formulario = document.querySelector('#quote-form');
   if (!formulario) return;
+  for (const campo of ['supplierId', 'materialId']) {
+    const selector = formulario.elements[campo];
+    selector.prepend(new Option('Selecciona y confirma la equivalencia', '', true, true));
+  }
   formulario.elements.unitPrice.value = producto.price;
   formulario.elements.notes.value = `Referencia pública: ${producto.name}. Tienda: ${producto.supplier}. Fuente: ${producto.url}. Consultado: ${producto.observedAt}. Verificar presentación, disponibilidad, impuestos y transporte antes de confirmar.`;
   const aviso = document.createElement('p');

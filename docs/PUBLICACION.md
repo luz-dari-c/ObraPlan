@@ -1,25 +1,9 @@
-# Publicación en GitHub y aplicación en línea
+# Publicación y despliegue de ObraPlan
 
-## Qué se publica
+La aplicación está disponible en **https://obraplan.onrender.com**. Render sirve interfaz y API desde un contenedor Java 21; Neon conserva la base PostgreSQL fuera del disco temporal del servicio. Ambos recursos se crearon en planes gratuitos.
 
-Código, requisitos, documentación, catálogo y notas documentales. No se publica data/, output/, claves, configuración local de integraciones, entornos virtuales ni clases compiladas. config/integrations.example.json permite configurar otra instalación sin compartir rutas de este equipo.
+El repositorio público es https://github.com/luz-dari-c/ObraPlan. No incluye base personal, claves, respaldos ni configuración privada. Los registros previos se migraron al PostgreSQL privado; no se publicaron como archivos en GitHub.
 
-El repositorio puede contener un commit inicial bajo la identidad Git del propietario, con la fecha real de publicación. Publicar como proyecto propio no requiere inventar historial, pruebas o atribuciones. La bitácora conserva las decisiones y los límites existentes.
+El despliegue se realiza desde main con Dockerfile. Las variables DATABASE_URL, OBRAPLAN_ENV y GEMINI_API_KEY viven en el servidor. Vercel no es necesario para esta arquitectura: separar el frontend introduciría otro dominio y configuración de sesiones sin aportar una necesidad actual.
 
-## Vercel: situación comprobada el 10 de octubre de 2026
-
-[Vercel Container Runtime](https://vercel.com/docs/functions/runtimes/container) está en beta y puede construir una imagen desde Dockerfile.vercel para ejecutar un servidor HTTP de cualquier lenguaje. Por tanto Java no impide por sí solo utilizar Vercel. Sus funciones escalan y se apagan; los archivos locales no son una base persistente compartida.
-
-La aplicación actual escucha en 127.0.0.1:8080, guarda JSON local y mantiene sesiones/cache de análisis en memoria. Para un despliegue funcional estable hacen falta: contenedor, escucha/puerto compatibles, almacenamiento persistente externo y estrategia de sesiones/ejecuciones para varias instancias. La clave Gemini se configura exclusivamente en el servidor; el archivo cifrado Windows no se traslada al hosting. El vault de este computador tampoco está disponible en la nube.
-
-Publicar solo index.html en Vercel mostraría la interfaz, pero no resolvería login, formularios ni agentes. No debe etiquetarse como aplicación completa. Tampoco debe prometerse persistencia usando /tmp. Referencia: [runtimes y filesystem](https://vercel.com/docs/functions/runtimes).
-
-## Alternativa con servidor Java continuo
-
-Una plataforma con contenedores y un volumen persistente permite conservar el backend y su JSON con menos cambios. [Render Free](https://render.com/docs/free) permite demostraciones, pero duerme por inactividad y no ofrece disco persistente; las escrituras se pierden al reiniciar/recrear la instancia. Un servicio así solo sirve como demo de datos descartables claramente identificada. No es respaldo ni alojamiento permanente de adquisiciones.
-
-Para conservar registros: servidor con disco persistente, o migración a una base externa. No se ha contratado hosting ni habilitado facturación. Deben comprobarse cuotas/condiciones de cualquier plan antes de desplegar.
-
-## URL en el repositorio
-
-Después de verificar login, guardar/leer datos, reinicio, análisis IA y permisos en el despliegue elegido, coloca su URL en el README y en GitHub → About → Website. Hasta entonces el estado es ejecución local comprobada, despliegue público pendiente.
+El plan gratuito puede suspender el cómputo por inactividad; los datos permanecen en Neon sujetos a sus cuotas y condiciones. No se promete disponibilidad garantizada ni capacidad de producción masiva. Consulta [OPERACION.md](OPERACION.md) para acceso, respaldo, mantenimiento y límites, y [VERIFICACION.md](VERIFICACION.md) para pruebas reales.

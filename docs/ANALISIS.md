@@ -45,8 +45,8 @@ Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3
 | RNF-02 | Validación e integridad. | Fechas ISO, cantidades positivas, precios finitos no negativos; operación inválida conserva estado; referencias permanecen en la obra autorizada. |
 | RNF-03 | Mantenibilidad y lectura. | Agentes en archivos separados, indentación consistente, responsabilidades y mapa documentados. |
 | RNF-04 | Ejecución reproducible local. | Aplicación con JDK 21; agente Python >=3.11 con biblioteca estándar y uv.lock sin paquetes externos. |
-| RNF-05 | Persistencia y recuperación. | Reemplazo atómico; datos permanecen tras reinicio; fallo del grafo no borra operación guardada. |
-| RNF-06 | Seguridad local y aislamiento por obra. | Loopback, PBKDF2, cookie HttpOnly/SameSite; conocimiento exige propietario y no exporta hashes/sesiones. |
+| RNF-05 | Persistencia y recuperación. | JSON local con reemplazo atómico; PostgreSQL con transacciones y bloqueo entre instancias; datos permanecen tras reinicio; fallo del grafo no borra operación guardada. |
+| RNF-06 | Seguridad local y aislamiento por obra. | Loopback en desarrollo; HTTPS y cookie Secure en producción; PBKDF2 y cookie HttpOnly/SameSite; conocimiento exige propietario y no exporta hashes/sesiones. |
 | RNF-07 | Uso en distintos anchos de pantalla. | Formularios y navegación utilizables en escritorio/móvil; grafo incluye lista de relaciones y controles accesibles. |
 | RNF-08 | Trazabilidad y honestidad de evidencia. | Necesidad, requisito, regla, componente y demostración vinculados; fuentes/limitaciones explícitas; no se inventan aprobaciones. |
 | RNF-09 | Separación de entornos de agentes. | Adaptador usa intérprete/entrypoint/cwd registrados y JSON; rechaza agentes deshabilitados; no importa paquetes externos. |

@@ -10,17 +10,29 @@ import java.util.*;
 final class Autenticacion {
     private final Database datos;
 
-    Autenticacion(Database datos) { this.datos = datos; }
+    Autenticacion(Database datos) {
+        this.datos = datos;
+    }
 
     String crear(String usuario) {
         String token = UUID.randomUUID() + "-" + UUID.randomUUID();
-        datos.write(estado -> {
-            var sesiones = sesiones(estado);
-            sesiones.removeIf(sesion -> Instant.parse(sesion.get("expiresAt").toString()).isBefore(Instant.now()));
-            sesiones.add(Json.map("id", resumen(token), "userId", usuario,
-                    "expiresAt", Instant.now().plus(12, ChronoUnit.HOURS).toString()));
-            return null;
-        });
+        datos.write(
+                estado -> {
+                    var sesiones = sesiones(estado);
+                    sesiones.removeIf(
+                            sesion ->
+                                    Instant.parse(sesion.get("expiresAt").toString())
+                                            .isBefore(Instant.now()));
+                    sesiones.add(
+                            Json.map(
+                                    "id",
+                                    resumen(token),
+                                    "userId",
+                                    usuario,
+                                    "expiresAt",
+                                    Instant.now().plus(12, ChronoUnit.HOURS).toString()));
+                    return null;
+                });
         return token;
     }
 
@@ -29,25 +41,34 @@ final class Autenticacion {
         return datos.readList("sessions").stream()
                 .filter(s -> Objects.equals(s.get("id"), resumen(token)))
                 .filter(s -> Instant.parse(s.get("expiresAt").toString()).isAfter(Instant.now()))
-                .map(s -> s.get("userId").toString()).findFirst().orElse(null);
+                .map(s -> s.get("userId").toString())
+                .findFirst()
+                .orElse(null);
     }
 
     void cerrar(String token) {
         if (token == null) return;
-        datos.write(estado -> {
-            sesiones(estado).removeIf(s -> Objects.equals(s.get("id"), resumen(token)));
-            return null;
-        });
+        datos.write(
+                estado -> {
+                    sesiones(estado).removeIf(s -> Objects.equals(s.get("id"), resumen(token)));
+                    return null;
+                });
     }
 
     @SuppressWarnings("unchecked")
     private List<Map<String, Object>> sesiones(Map<String, Object> estado) {
-        return (List<Map<String, Object>>) estado.computeIfAbsent("sessions", k -> new ArrayList<>());
+        return (List<Map<String, Object>>)
+                estado.computeIfAbsent("sessions", k -> new ArrayList<>());
     }
 
     private String resumen(String token) {
         try {
-            return HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(token.getBytes(StandardCharsets.UTF_8)));
-        } catch (java.security.NoSuchAlgorithmException error) { throw new IllegalStateException(error); }
+            return HexFormat.of()
+                    .formatHex(
+                            MessageDigest.getInstance("SHA-256")
+                                    .digest(token.getBytes(StandardCharsets.UTF_8)));
+        } catch (java.security.NoSuchAlgorithmException error) {
+            throw new IllegalStateException(error);
+        }
     }
 }

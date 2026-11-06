@@ -120,7 +120,8 @@ public final class KnowledgeAgent {
             }
             lastSync = Instant.now().toString();
             if (vault != null) {
-                if (vault != null && !Files.isDirectory(vault.getParent().getParent().resolve(".obsidian"))) {
+                if (vault != null
+                        && !Files.isDirectory(vault.getParent().getParent().resolve(".obsidian"))) {
                     throw new IOException("El vault configurado no existe o no contiene .obsidian");
                 }
                 try (var folders = Files.list(runtime)) {
@@ -415,15 +416,14 @@ public final class KnowledgeAgent {
             }
         }
         try {
-            if (vault != null && !Files.isDirectory(vault.getParent().getParent().resolve(".obsidian"))) {
-                throw new IOException("Vault no disponible");
-            }
             Path folder = analyses.resolve(safeId(workId));
             Files.createDirectories(folder);
             put(folder, node, note.toString());
             boolean published = false;
             if (vault != null) {
                 try {
+                    if (!Files.isDirectory(vault.getParent().getParent().resolve(".obsidian")))
+                        throw new IOException("Vault no disponible");
                     Path target = vault.resolve("Analisis").resolve(safeId(workId));
                     Files.createDirectories(target);
                     put(target, node, note.toString());

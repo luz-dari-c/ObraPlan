@@ -100,3 +100,13 @@ El usuario confirmó explícitamente la publicación pública en luz-dari-c/Obra
 ## 10 de octubre de 2026 — Revisión de documentación pública
 
 Se revisó la documentación para centrarla en ObraPlan, sus componentes e integraciones comprobadas. Se aclaró la distinción entre agentes Gemini, herramientas deterministas y skills de desarrollo. Las fuentes y relaciones documentales se mantienen bajo OP-Fuentes-Referencias. Esta revisión editorial no modifica adquisiciones ni comportamiento de la aplicación.
+
+## 5 de noviembre de 2026 — Evolución hacia servicio público
+
+Se creó PLAN_EVOLUCION.md y se eligió una transición compatible: PostgreSQL con registros JSONB/indexados y transacciones, manteniendo JSON para desarrollo/migración; autenticación y configuración extraídas a clases en español. Las sesiones tienen hash y caducidad y los análisis confirmados se conservan en base. No se reescribieron contratos HTTP ni se cambió la regla del subtotal parcial.
+
+Se simplificó la interfaz con tipografía de sistema, superficies claras, menos decoración y guía recogida cuando hay materiales. Se añadió consulta autenticada de dos catálogos públicos con fuente/fecha/moneda, caché y confirmación de material/proveedor al preparar cotizaciones. Una tienda declara USD: esa referencia no se convierte a COP. Las instrucciones de agentes separan contexto actual, fuentes y propuestas históricas.
+
+Se crearon recursos gratuitos propios de ObraPlan en Render y Neon. El mismo servicio sirve interfaz/API; se evitó dividir dominios y sesiones sin necesidad. Migración comprobada sin cambiar el archivo local; respaldo PostgreSQL restaurado en base aislada. La cuenta histórica demo contenía obras de uso real: se revocó su contraseña conocida solo en nube y se conservó una credencial privada para el usuario. No se publicaron datos o secretos en GitHub. OPERACION.md documenta acceso, cuotas, arranque en frío, respaldos y límites.
+
+Git pidió seleccionar identidad; el push con credential.username=luz-dari-c funcionó sin cambiar permisos. El conector GitHub rechazó escritura (403) y no se utilizó para el commit. Render desplegó el código desde main. Pruebas y límites reales en VERIFICACION.md.
