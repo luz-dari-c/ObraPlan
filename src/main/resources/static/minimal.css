@@ -62,3 +62,6 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
   .sidebar .nav-item { flex: 0 0 112px; font-size: 11px; flex-direction: column; align-items: center; gap: 4px; white-space: normal; text-align: center; padding: 8px 5px; }
   .main-area { padding-bottom: 100px; }
 }
+.metric.critical { background: #fff7e6; }
+.metric.critical .metric-label, .metric.critical .metric-sub { color: #64512d; }
+.metric.critical::after { color: #7c4900; }
