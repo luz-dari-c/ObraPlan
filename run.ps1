@@ -1,6 +1,7 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 Set-Location $projectRoot
+if (-not (Test-Path 'config/integrations.json')) { Copy-Item 'config/integrations.example.json' 'config/integrations.json' }
 $settings = Get-Content -Raw 'config/integrations.json' | ConvertFrom-Json
 $credentialPath = Join-Path $projectRoot 'config/gemini-key.local.xml'
 if (-not $env:GEMINI_API_KEY -and (Test-Path -LiteralPath $credentialPath)) {
@@ -9,6 +10,7 @@ if (-not $env:GEMINI_API_KEY -and (Test-Path -LiteralPath $credentialPath)) {
 }
 if (-not (Test-Path Env:OBRAPLAN_VAULT)) { $env:OBRAPLAN_VAULT = $settings.vaultPath }
 $port = if ($env:OBRAPLAN_PORT) { $env:OBRAPLAN_PORT } else { '8080' }
+if ($env:DATABASE_URL) { & './scripts/dependencies.ps1' }
 Write-Host 'Compilando ObraPlan...'
 & './scripts/compile.ps1'
 if ($env:OBRAPLAN_VAULT -and (Test-Path -LiteralPath $settings.python)) {
@@ -16,4 +18,4 @@ if ($env:OBRAPLAN_VAULT -and (Test-Path -LiteralPath $settings.python)) {
     if ($LASTEXITCODE -ne 0) { Write-Warning 'La documentación queda pendiente de sincronizar. La aplicación mostrará el estado del grafo.' }
 }
 Write-Host "Iniciando ObraPlan en http://127.0.0.1:$port (Ctrl+C para detenerlo)."
-& java --add-modules jdk.httpserver -cp 'build/classes' co.obraplan.Server
+& java --add-modules jdk.httpserver -cp 'build/classes;build/lib/*' co.obraplan.Server

@@ -1,0 +1,9 @@
+.git
+data
+output
+build
+.venv
+node_modules
+config/*.local.*
+config/integrations.json
+.env*

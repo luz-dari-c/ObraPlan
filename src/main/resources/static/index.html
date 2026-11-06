@@ -9,13 +9,8 @@
       content="ObraPlan organiza materiales, cotizaciones y compras de obra."
     />
     <title>ObraPlan — Bitácora de obra</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="/assets/minimal.css" />
   </head>
   <body>
     <div id="login-screen" class="screen">
@@ -189,6 +184,7 @@
             ><a href="#cotizaciones" class="nav-item" data-route="quotes"
               ><span>☷</span>Cotizaciones y pedidos</a
             >
+            <a href="#catalogo" class="nav-item" data-route="catalogo"><span>⌕</span> Catálogo público</a>
             <a href="#conocimiento" class="nav-item" data-route="knowledge"
               ><span>◉</span>Agentes y conocimiento</a
             >
@@ -201,12 +197,13 @@
           </div>
         </aside>
         <main class="main-area">
-          <aside
+          <details
             id="work-welcome"
             class="work-welcome"
             hidden
             aria-label="Bienvenida y resumen por voz"
           >
+            <summary class="welcome-toggle">Tu guía y resumen de la obra</summary>
             <div class="welcome-heading">
               <span class="eyebrow">TU OBRA AL DÍA</span
               ><span class="welcome-tag">Tu guía de la obra</span>
@@ -269,7 +266,7 @@
               </p>
               <div id="welcome-lessons"></div>
             </details>
-          </aside>
+          </details>
           <div class="topline">
             <span id="breadcrumbs" class="breadcrumbs"></span
             ><span class="demo-chip" id="data-mode-chip"
@@ -408,6 +405,12 @@
               Los precios se registran manualmente. Los materiales sin
               cotización no se suman al subtotal.
             </p>
+          </section>
+          <section id="catalogo-view" class="view hidden">
+            <div class="page-head"><div><h1>Catálogo público</h1><p class="page-subtitle">Explora productos publicados por ferreterías y revisa su fuente antes de cotizar.</p></div></div>
+            <form id="catalogo-form" class="catalogo-buscador"><label class="field">Nombre del material<input id="catalogo-consulta" minlength="3" maxlength="80" placeholder="Por ejemplo, cemento" required /></label><button id="catalogo-buscar" class="btn btn-primary">Buscar productos</button></form>
+            <p id="catalogo-estado" role="status">Los precios dependen de la presentación y la ubicación. No incluyen una confirmación de entrega.</p>
+            <div id="catalogo-resultados" class="catalogo-grid"></div>
           </section>
           <section id="hardware-view" class="view hidden">
             <div class="page-head">
@@ -697,5 +700,6 @@
     <script src="/assets/app.js" defer></script>
     <script src="/assets/knowledge.js" defer></script>
     <script src="/assets/assistant.js" defer></script>
+    <script src="/assets/catalogo.js" defer></script>
   </body>
 </html>

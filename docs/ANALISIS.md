@@ -8,7 +8,7 @@ Necesidades: N-01 organizar información, N-02 gestionar a tiempo, N-03 conocer 
 
 Incluye acceso local, obras, materiales, directorio, cotizaciones, pedidos, filtros, cálculos explícitos, alertas, actividad, persistencia, agentes visibles y consulta/grafo de conocimiento.
 
-Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3D, WhatsApp/correos automáticos, inventario/precios en vivo, pagos, compras comerciales y recuperación de contraseña por correo.
+Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3D, WhatsApp/correos automáticos, inventario en vivo o garantía de vigencia comercial, pagos, compras comerciales y recuperación de contraseña por correo.
 
 ## Requisitos funcionales y aceptación
 
@@ -33,6 +33,9 @@ Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3
 | RF-17 | Mostrar participantes, herramientas, fuentes y consumo de IA. | La respuesta muestra eventos de ejecución y metadata de tokens del proveedor; distingue caché, falta de configuración y motivo de detención. Las referencias breves corresponden a fuentes canónicas también al conservarlas en el grafo. |
 | RF-18 | Conservar propuestas de agentes en el grafo con confirmación. | Un análisis completo y vigente puede guardarse por su propietario; nota vinculada a obra/coordinador/fuentes y recuperable solamente en esa obra. |
 | RF-19 | Guiar por voz y texto al abrir una obra, según los registros existentes. | Saluda con nombre y obra; muestra recorrido y siguiente acción según datos. Incluye guía completa de ocho secciones desde crear obra hasta recepción, agentes y rutina diaria, con campos, ejemplos y errores habituales. Se abre al entrar en una obra sin materiales y cada sección se puede escuchar. Al guardar actualiza el siguiente paso sin repetir voz; rechazadas/canceladas no cuentan como avance. Mantiene resumen y controles de voz sin consultar Gemini. |
+
+| RF-20 | Consultar catálogos públicos por obra. | Búsqueda autenticada muestra productos, moneda declarada, fuente y fecha. Fallos por proveedor se explican; moneda distinta de COP o precio por rango impide preparación automática. El usuario confirma unidad, material y proveedor antes de guardar cotización. |
+| RF-21 | Usar persistencia PostgreSQL y sesiones durables. | Producción rechaza arranque sin DATABASE_URL. Reinicio conserva registros y sesiones vigentes; escrituras inválidas revierten; escrituras concurrentes no pierden cambios; cierre revoca sesión en otras instancias. Migración solo admite destino vacío. |
 
 ## Requisitos no funcionales y comprobación
 
@@ -68,3 +71,7 @@ Son criterios de esta entrega académica. No se han inventado métricas de rendi
 ## Proceso aplicado
 
 Planteamiento → necesidades → alcance → RF/RNF y reglas → entidades/arquitectura → implementación → comprobación → memoria y explicación. Las skills locales representan roles de planteamiento, requisitos y conocimiento; ver [AGENTES.md](AGENTES.md). Procedencia: [FUENTES_Y_REFERENCIAS.md](FUENTES_Y_REFERENCIAS.md). Comprobación: [VERIFICACION.md](VERIFICACION.md).
+
+## Evolución para servicio público
+
+La consulta de catálogos públicos amplía el registro manual con referencias comerciales verificables. No confirma stock ni constituye compra. PostgreSQL conserva datos, sesiones y propuestas confirmadas; JSON queda para desarrollo y migración. La interfaz y API comparten origen.

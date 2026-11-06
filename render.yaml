@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: obraplan
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: OBRAPLAN_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

@@ -9,12 +9,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 final class Database {
     private final Path file;
+    private final AlmacenEstado almacen;
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
     private Map<String, Object> state;
     private java.util.function.Consumer<Map<String, Object>> onCommit = snapshot -> {};
 
     Database(Path file) {
         this.file = file;
+        this.almacen = null;
         try {
             Files.createDirectories(file.getParent());
             if (Files.exists(file))
@@ -28,11 +30,16 @@ final class Database {
         }
     }
 
+    Database(AlmacenEstado almacen) {
+        this.file = null;
+        this.almacen = almacen;
+    }
+
     @SuppressWarnings("unchecked")
     Map<String, Object> read() {
         lock.readLock().lock();
         try {
-            return (Map<String, Object>) deep(state);
+            return almacen == null ? (Map<String, Object>) deep(state) : almacen.leer();
         } finally {
             lock.readLock().unlock();
         }
@@ -69,19 +76,33 @@ final class Database {
 
     @SuppressWarnings("unchecked")
     <T> T write(java.util.function.Function<Map<String, Object>, T> action) {
+        if (almacen != null) {
+            T resultado = almacen.modificar(action);
+            notificar(almacen.leer());
+            return resultado;
+        }
         lock.writeLock().lock();
         Map<String, Object> previous = state;
         try {
             state = Json.object(deep(previous));
             T out = action.apply(state);
             persist();
-            onCommit.accept(Json.object(deep(state)));
+            notificar(Json.object(deep(state)));
             return out;
         } catch (RuntimeException error) {
             state = previous;
             throw error;
         } finally {
             lock.writeLock().unlock();
+        }
+    }
+
+    private void notificar(Map<String, Object> confirmado) {
+        try {
+            onCommit.accept(confirmado);
+        } catch (RuntimeException error) {
+            // La proyección de conocimiento no puede deshacer una transacción confirmada.
+            System.err.println("Datos guardados; publicación de conocimiento pendiente.");
         }
     }
 

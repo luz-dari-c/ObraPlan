@@ -199,6 +199,7 @@ window.WorkWelcome = (() => {
   function show(user, work, data, announce = true) {
     if (announce) cancel();
     panel.hidden = false;
+    if (announce) panel.open = !(data.materials || []).length;
     const guide = guidance(data);
     message = brief(user, work, data, guide);
     transcript.textContent = message;

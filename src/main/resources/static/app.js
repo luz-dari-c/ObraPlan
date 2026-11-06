@@ -167,6 +167,7 @@ function route(name) {
     hardware: "FERRETERÍAS",
     quotes: "COTIZACIONES Y PEDIDOS",
     knowledge: "AGENTES Y CONOCIMIENTO",
+    catalogo: "CATÁLOGO PÚBLICO",
   };
   $("#breadcrumbs").textContent =
     `${state.work?.name?.toUpperCase() || "OBRA"} / ${labels[name] || ""}`;
@@ -1478,3 +1479,8 @@ async function init() {
   }
 }
 init();
+
+// La cuenta local de demostración no se anuncia en una instalación pública vacía.
+api('/config').then(config => {
+  if (!config.demo) document.querySelectorAll('.demo-credentials, .login-demo').forEach(el => el.hidden = true);
+}).catch(() => {});

@@ -682,6 +682,39 @@
           "OP-Verificacion"
         ]
       }
+    },
+    {
+      "id": "OP-Persistencia-Postgres",
+      "title": "Persistencia PostgreSQL y sesiones",
+      "type": "componente",
+      "source": "src/main/java/co/obraplan/AlmacenPostgres.java",
+      "summary": "Registros JSONB por entidad e índices, transacciones con bloqueo entre instancias, sesiones con hash y caducidad y propuestas confirmadas durables. JSON compatible para migración explícita.",
+      "relations": {
+        "implementa": [
+          "OP-RF-21"
+        ],
+        "pertenece_a": [
+          "OP-Proyecto"
+        ]
+      }
+    },
+    {
+      "id": "OP-Catalogo-Publico",
+      "title": "Referencias de catálogos públicos",
+      "type": "componente",
+      "source": "src/main/java/co/obraplan/CatalogoPublico.java",
+      "summary": "Consulta limitada a tiendas registradas. Conserva moneda declarada, precio observado, fuente y fecha. No garantiza disponibilidad; requiere confirmación manual de presentación y cotización.",
+      "relations": {
+        "implementa": [
+          "OP-RF-20"
+        ],
+        "pertenece_a": [
+          "OP-Proyecto"
+        ],
+        "consulta": [
+          "OP-Regla-Costos"
+        ]
+      }
     }
   ]
 }

@@ -13,13 +13,17 @@ final class AppService {
     private final Database db;
     private final KnowledgeAgent knowledge;
     private final Orchestrator agents = new Orchestrator();
-    private final Map<String, String> sessions = new ConcurrentHashMap<>();
+    private final Autenticacion autenticacion;
 
     AppService(Database db, KnowledgeAgent knowledge) {
         this.db = db;
+        this.autenticacion = new Autenticacion(db);
         this.knowledge = knowledge;
         db.onCommit(knowledge::record);
         knowledge.record(db.read());
+        for (var analisis : db.readList("analyses")) {
+            knowledge.saveAnalysis(analisis.get("workId").toString(), Json.object(analisis.get("result")));
+        }
     }
 
     Map<String, Object> knowledge(Map<String, Object> user, String workId, String query) {
@@ -38,6 +42,13 @@ final class AppService {
     Map<String, Object> saveAnalysis(
             Map<String, Object> user, String workId, Map<String, Object> result) {
         work(user, workId);
+        db.write(estado -> {
+            estado.computeIfAbsent("analyses", clave -> new ArrayList<>());
+            List<Map<String, Object>> lista = maps(estado, "analyses");
+            lista.removeIf(item -> Objects.equals(item.get("id"), result.get("runId")));
+            lista.add(Json.map("id", result.get("runId"), "workId", workId, "result", result));
+            return null;
+        });
         return knowledge.saveAnalysis(workId, result);
     }
 
@@ -51,8 +62,7 @@ final class AppService {
         if (!Password.verify(
                 password == null ? "" : password, AgentData.str(user.get("passwordHash"))))
             throw new HttpError(401, "Correo o contraseña incorrectos.");
-        String token = UUID.randomUUID().toString();
-        sessions.put(token, AgentData.str(user.get("id")));
+        String token = autenticacion.crear(user.get("id").toString());
         return new Login(token, publicUser(user));
     }
 
@@ -83,19 +93,18 @@ final class AppService {
                             users.add(u);
                             return u;
                         });
-        String t = UUID.randomUUID().toString();
-        sessions.put(t, AgentData.str(user.get("id")));
+        String t = autenticacion.crear(user.get("id").toString());
         return new Login(t, publicUser(user));
     }
 
     void logout(String token) {
-        if (token != null) sessions.remove(token);
+        autenticacion.cerrar(token);
     }
 
     Map<String, Object> current(String token) {
         if (token == null || token.isBlank())
             throw new HttpError(401, "Inicia sesión para continuar.");
-        String uid = sessions.get(token);
+        String uid = autenticacion.usuario(token);
         if (uid == null) throw new HttpError(401, "Inicia sesión para continuar.");
         return db.readUsers().stream()
                 .filter(u -> uid.equals(u.get("id")))

@@ -14,20 +14,21 @@ Código fuente: [luz-dari-c/ObraPlan](https://github.com/luz-dari-c/ObraPlan).
 - Registrar materiales por etapa, cantidad, unidad, fecha necesaria y plazo.
 - Añadir ferreterías y registrar sus ofertas manualmente.
 - Comparar cotizaciones y llevar estados de pedido, tránsito y recepción.
+- Buscar productos en catálogos públicos, con fuente, moneda y fecha, y preparar una cotización que debe confirmarse.
 - Revisar subtotal conocido, precios faltantes y alertas de fechas.
 - Seguir una guía para principiantes con ocho secciones y lectura por voz local.
 - Consultar agentes de IA y ver participantes, herramientas, fuentes y consumo.
 - Conservar propuestas completas en un grafo conectado con Obsidian.
 
-No realiza compras, pagos ni contactos automáticos. Los precios y estados comerciales los registra el usuario. Las cantidades de demostración no constituyen un cálculo estructural.
+No realiza compras, pagos ni contactos automáticos. El usuario confirma precios y estados comerciales; los catálogos son referencias observadas. Las cantidades de demostración no constituyen un cálculo estructural.
 
 ## Cómo funciona
 
 ```mermaid
 flowchart LR
     U[Usuario] --> F[Interfaz web]
-    F --> J[Backend Java]
-    J --> D[Datos JSON]
+    F --> J[Backend Java 21]
+    J --> D[PostgreSQL en producción]
     J --> R[Cálculos y alertas]
     J --> A[Coordinador IA]
     A --> L[Logística y seguimiento]
@@ -45,7 +46,7 @@ El software valida y guarda datos y calcula costos con reglas explícitas. Gemin
 
 ## Ejecutar en tu equipo
 
-Necesitas **JDK 21**, Git y PowerShell en Windows. Python **3.11 o superior** se utiliza para las herramientas documentales; no requiere paquetes externos para el modo base. No hace falta Maven ni una instalación de Node para utilizar la aplicación.
+Necesitas **JDK 21**, Git y PowerShell en Windows. Python **3.11 o superior** se utiliza para las herramientas documentales; no requiere paquetes externos para el modo base. No hace falta Maven ni una instalación de Node para utilizar la aplicación. Con PostgreSQL, el script descarga el controlador JDBC con versión y SHA-256 verificados.
 
 Clona este repositorio, entra en su carpeta y prepara tu configuración local:
 
@@ -58,7 +59,7 @@ Copy-Item config/integrations.example.json config/integrations.json
 
 Si ya tienes `config/integrations.json`, conserva tu configuración. Abre **http://127.0.0.1:8080** y detén el servidor con **Ctrl+C**. También puedes iniciar con `run.bat`.
 
-Al iniciar sin base existente se crea un escenario ficticio. Acceso de demostración: **demo@obraplan.co** / **ObraPlan2026!**. Las cuentas nuevas tienen sus propias obras. No reemplaces `data/obraplan.json` para ejecutar pruebas: contiene los registros locales guardados.
+En modo local, al iniciar sin base existente se crea un escenario ficticio. En producción se utiliza PostgreSQL sin cuentas predefinidas. Acceso de demostración: **demo@obraplan.co** / **ObraPlan2026!**. Las cuentas nuevas tienen sus propias obras. No reemplaces `data/obraplan.json` para ejecutar pruebas: contiene los registros locales guardados.
 
 ## Activar los agentes con Gemini
 
@@ -134,10 +135,25 @@ Las comprobaciones utilizan bases temporales; no reemplazan adquisiciones del us
 | [Guion de presentación](docs/GUIA_VIDEO.md) | Explicación y demostración |
 | [Publicación y despliegue](docs/PUBLICACION.md) | GitHub, Vercel y persistencia |
 
-## Estado del despliegue
+## Persistencia y despliegue
 
-La versión comprobada se ejecuta localmente. **Todavía no hay una URL pública verificada.** Subir el código a GitHub no pone automáticamente en funcionamiento el backend.
+El mismo servicio sirve la interfaz y la API; no requiere un alojamiento separado del frontend. PostgreSQL conserva usuarios, obras, materiales, proveedores, cotizaciones, actividad, sesiones con caducidad y propuestas IA confirmadas. JSON sigue disponible para desarrollo local. Los registros PostgreSQL usan documentos JSONB por entidad con índices; es una transición compatible con el dominio actual, no un modelo relacional completamente normalizado.
 
-Vercel dispone de un runtime de contenedores en beta que puede ejecutar Java, pero esta aplicación necesita adaptar escucha/puerto, persistencia JSON y sesiones antes de anunciar una demo completa y estable. Las opciones y límites están en [PUBLICACION.md](docs/PUBLICACION.md). Cuando exista un despliegue comprobado, su URL puede añadirse al README y al campo Website del repositorio.
+```powershell
+$env:DATABASE_URL = 'postgresql://USUARIO:CLAVE@HOST/BASE?sslmode=require'
+./run.ps1
+```
 
-Las claves, base de usuarios, sesiones, respaldos y configuración personal están excluidos de Git. El servicio local escucha en loopback; esta versión no se presenta como servicio público de producción.
+Nunca escribas credenciales reales en este archivo. Para migrar una base local a un destino PostgreSQL vacío:
+
+```powershell
+./scripts/dependencies.ps1
+./scripts/compile.ps1
+java --add-modules jdk.httpserver -cp 'build/classes;build/lib/*' co.obraplan.MigrarDatos data/obraplan.json
+```
+
+La migración no reemplaza destinos con datos ni modifica el archivo de origen. Requiere un respaldo previo. En producción `OBRAPLAN_ENV=production` exige `DATABASE_URL`, acepta `PORT` y activa cookies Secure. `Dockerfile` y `render.yaml` preparan Render con base externa; no pongas PostgreSQL en el disco temporal del plan gratuito.
+
+Los catálogos consultan Store API pública de Ferretería en Galerías y Ferresmart, con caché de cinco minutos y fallos independientes. La moneda se conserva tal como la declara cada tienda; una moneda diferente de COP impide preparar automáticamente la cotización. No se garantiza inventario, entrega, impuestos o equivalencia de presentación.
+
+Consulta [operación y despliegue](docs/OPERACION.md) y [plan y decisiones](docs/PLAN_EVOLUCION.md). El estado real del despliegue y sus pruebas se registran allí. Las claves, base personal y respaldos están excluidos de Git.

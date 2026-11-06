@@ -100,7 +100,7 @@ function drawKnowledgeGraph(id) {
     ),
   ];
   const nodes = neighbors
-    .slice(0, 16)
+    .slice(0, 8)
     .map((nodeId) => knowledgeState.nodes.find((node) => node.id === nodeId))
     .filter(Boolean);
   const points = new Map([[id, { x: 400, y: 270 }]]);
@@ -203,9 +203,9 @@ function drawKnowledgeGraph(id) {
         )
         .join("")}
     </ul>
-    ${neighbors.length > 16
+    ${neighbors.length > 8
       ? /* HTML */ `<p class="minor">
-          El dibujo muestra 16 vecinos; la lista incluye todas las relaciones.
+          El dibujo muestra 8 vecinos; la lista incluye todas las relaciones.
         </p>`
       : ""}`;
 }

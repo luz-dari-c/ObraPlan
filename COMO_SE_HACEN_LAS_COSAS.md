@@ -131,3 +131,15 @@ Edita código, requisitos y catálogo de conceptos. Luego regenera las notas doc
 | `output/knowledge/analyses/<workId>/` | Propuestas confirmadas, conservadas aparte de notas regenerables |
 
 `run.ps1` carga la credencial protegida si no existe GEMINI_API_KEY en el proceso. No instala modelos locales ni carga automáticamente `.env`. La clave necesita un proyecto Google sin facturación; la aplicación no comprueba esa condición en Google.
+
+## Evolución de producción (noviembre de 2026)
+
+- `Configuracion.java`: entorno, red, puerto y selección de almacenamiento. Producción exige PostgreSQL.
+- `AlmacenEstado.java` y `AlmacenPostgres.java`: contrato transaccional, JSONB por registro, índices y bloqueo entre instancias. `Database.java` conserva la compatibilidad JSON y la notificación posterior al commit.
+- `Autenticacion.java`: sesiones persistentes con hash y caducidad de doce horas. `LimiteSolicitudes.java`: límites por origen para acceso y catálogo.
+- `MigrarDatos.java`: migración explícita desde JSON a un destino vacío.
+- `CatalogoPublico.java` y `static/catalogo.js`: productos públicos y preparación de cotizaciones. No reciben URLs arbitrarias ni cambian pedidos.
+- `agents/ai/InstruccionesAgentes.java`: contexto de cada especialista, unidades, fechas y fuentes. Los análisis confirmados se restauran desde la base al arrancar.
+- `static/minimal.css`: sistema visual simplificado. La guía aparece recogida en obras con materiales; sigue abierta para principiantes.
+- `Dockerfile`, `render.yaml`, `scripts/dependencies.ps1`: despliegue y controlador JDBC verificado.
+- `docs/OPERACION.md`: credenciales, respaldo, límites, recuperación y estado de publicación.

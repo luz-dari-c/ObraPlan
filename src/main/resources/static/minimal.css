@@ -1,0 +1,55 @@
+/* Sistema visual: superficies limpias, una familia tipográfica y jerarquía consistente. */
+:root {
+  --ivory: #f7f8fa; --paper: #ffffff; --sand: #eef1f4;
+  --sand-deep: #d5dce3; --ink: #202a35; --muted: #586572;
+  --line: #e0e5eb; --line-dark: #a7b3bf; --petrol: #225b50;
+  --petrol-2: #17443c; --terra: #586572; --signal: #498e81;
+  --soft-green: #eaf3ef; --soft-yellow: #fff7de; --soft-terra: #fff0eb;
+}
+body, input, button, select, textarea { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+.technical-bg, .blueprint-thumb, .blueprint-grid { background-image: none; }
+.draw-line, .dim, .art-circle, .blueprint-thumb::after, .blueprint-thumb::before { display: none; }
+.eyebrow { font-family: inherit; letter-spacing: .035em; color: var(--muted); }
+.brand { letter-spacing: -.035em; }
+h1 { letter-spacing: -.035em; font-size: clamp(1.65rem, 3vw, 2.25rem); }
+.login-shell { grid-template-columns: minmax(320px, 510px); justify-content: center; background: var(--ivory); }
+.login-art { display: none; }
+.login-panel { background: white; border: 1px solid var(--line); border-radius: 16px; margin: 40px 16px; padding: 44px; }
+.login-form { width: 100%; }
+.sidebar { background: #fff; color: var(--ink); border-right: 1px solid var(--line); }
+.sidebar .brand, .sidebar .nav-item, .sidebar .sidebar-footer, .sidebar .work-switcher, .sidebar a, .sidebar label { color: var(--ink); }
+.sidebar select { background: var(--ivory); color: var(--ink); border: 1px solid var(--line); }
+.sidebar .nav-item:hover, .sidebar .nav-item.active { background: var(--soft-green); color: var(--petrol); }
+.nav-item { border-radius: 8px; }
+.work-sheet, .work-sheet:nth-child(even), .work-sheet:hover { background: white; transform: none; }
+.work-sheet, .agent-card, .knowledge-query, .knowledge-source, .knowledge-graph-layout, .stat-card, .metric-card { border: 1px solid var(--line); border-radius: 10px; }
+.blueprint-thumb { height: 5px; background: var(--petrol); border-radius: 3px; }
+.btn { border-radius: 7px; font-weight: 600; }
+input, select, textarea { border-radius: 7px; background: #fff; }
+.page-head { gap: 18px; }
+.modal { border-radius: 14px; }
+.demo-credentials { background: var(--ivory); border: 1px solid var(--line); border-radius: 7px; }
+.knowledge-source { background: white; }
+.producto-publico { border: 1px solid var(--line); border-radius: 10px; background: white; padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+.producto-publico p, .producto-publico h3 { margin: 0; }
+.catalogo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 22px; }
+.catalogo-buscador { display: flex; gap: 12px; max-width: 650px; margin: 24px 0; }
+.catalogo-buscador input { flex: 1; min-width: 0; padding: 12px; border: 1px solid var(--line-dark); }
+.graph-surface svg { max-height: 480px; }
+@media (max-width: 700px) {
+  .login-panel { margin: 16px; padding: 26px; }
+  .catalogo-buscador { flex-direction: column; }
+  .page-head { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+/* Unifica tipografía heredada y reduce el peso de la guía cuando ya hay registros. */
+body * { font-family: inherit; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+.side-bottom, .side-bottom span, .side-bottom button { color: var(--muted); }
+.side-bottom strong { color: var(--ink); }
+.work-welcome { background: white; border: 1px solid var(--line); border-radius: 9px; padding: 16px 20px; }
+.welcome-toggle { cursor: pointer; font-weight: 600; color: var(--petrol); }
+.work-welcome[open] .welcome-toggle { margin-bottom: 20px; }
+.welcome-heading { display: none; }
+.welcome-step, .welcome-steps li { border-radius: 5px; }
