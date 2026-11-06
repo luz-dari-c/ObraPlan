@@ -159,7 +159,7 @@ body {
   background: var(--ivory);
 }
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: system-ui, sans-serif;
   color: var(--ink);
   overflow-x: hidden;
 }
@@ -219,8 +219,7 @@ textarea:focus-visible {
 }
 .eyebrow {
   font:
-    700 0.66rem "Space Mono",
-    monospace;
+    700 0.66rem system-ui;
   letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--terra);
@@ -233,8 +232,7 @@ textarea:focus-visible {
   align-items: center;
   gap: 5px;
   font:
-    700 0.63rem "Space Mono",
-    monospace;
+    700 0.63rem system-ui;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   padding: 5px 7px;
@@ -389,7 +387,7 @@ textarea:focus-visible {
   position: absolute;
   top: 26px;
   left: 30px;
-  font: 700 0.65rem "Space Mono";
+  font: 700 0.65rem system-ui;
   color: #a56d48;
   letter-spacing: 0.1em;
 }
@@ -443,7 +441,7 @@ textarea:focus-visible {
   line-height: 1.7;
 }
 .demo-credentials code {
-  font-family: "Space Mono", monospace;
+  font-family: system-ui;
 }
 .login-art {
   background: var(--petrol);
@@ -493,7 +491,7 @@ textarea:focus-visible {
 }
 .coordinate {
   position: absolute;
-  font: 700 0.63rem "Space Mono";
+  font: 700 0.63rem system-ui;
   letter-spacing: 0.07em;
   color: var(--signal);
 }
@@ -573,7 +571,7 @@ textarea:focus-visible {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-  font: 0.67rem "Space Mono";
+  font: 0.67rem system-ui;
   color: #d6e0d4;
   margin-top: 24px;
 }
@@ -717,7 +715,7 @@ textarea:focus-visible {
   margin: 4px 10px 24px;
 }
 .side-label {
-  font: 700 0.6rem "Space Mono";
+  font: 700 0.6rem system-ui;
   letter-spacing: 0.1em;
   color: #cad5ce;
   margin: 0 10px 7px;
@@ -811,7 +809,7 @@ textarea:focus-visible {
   gap: 16px;
 }
 .breadcrumbs {
-  font: 0.67rem "Space Mono";
+  font: 0.67rem system-ui;
   letter-spacing: 0.06em;
   color: var(--muted);
 }
@@ -839,7 +837,7 @@ textarea:focus-visible {
 }
 .dossier-label {
   display: block;
-  font: 0.62rem "Space Mono";
+  font: 0.62rem system-ui;
   color: var(--muted);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -874,12 +872,12 @@ textarea:focus-visible {
   border-right: 0;
 }
 .metric-label {
-  font: 0.66rem "Space Mono";
+  font: 0.66rem system-ui;
   color: var(--muted);
   text-transform: uppercase;
 }
 .metric-value {
-  font: 700 clamp(1.55rem, 2.6vw, 2.5rem) "Space Mono";
+  font: 700 clamp(1.55rem, 2.6vw, 2.5rem) system-ui;
   letter-spacing: -0.08em;
   margin: 19px 0 7px;
 }
@@ -896,7 +894,7 @@ textarea:focus-visible {
   position: absolute;
   right: 12px;
   top: 12px;
-  font: 0.55rem "Space Mono";
+  font: 0.55rem system-ui;
   letter-spacing: 0.08em;
 }
 .section {
@@ -954,7 +952,7 @@ textarea:focus-visible {
 .status {
   display: inline-flex;
   align-items: center;
-  font: 700 0.62rem "Space Mono";
+  font: 700 0.62rem system-ui;
   padding: 5px 7px;
   border: 1px solid currentColor;
   white-space: nowrap;
@@ -1011,7 +1009,7 @@ table {
   font-size: 0.78rem;
 }
 th {
-  font: 700 0.61rem "Space Mono";
+  font: 700 0.61rem system-ui;
   letter-spacing: 0.035em;
   text-transform: uppercase;
   text-align: left;
@@ -1031,7 +1029,7 @@ tbody tr:hover {
   font-weight: 700;
 }
 .amount {
-  font-family: "Space Mono";
+  font-family: system-ui;
   font-size: 0.71rem;
 }
 .row-actions {
@@ -1059,7 +1057,7 @@ tbody tr:hover {
   margin-bottom: 20px;
 }
 .cost-summary strong {
-  font: 700 1.2rem "Space Mono";
+  font: 700 1.2rem system-ui;
 }
 .cost-summary p {
   margin: 3px 0 0;
@@ -1123,7 +1121,7 @@ tbody tr:hover {
 }
 .timeline-item time {
   display: block;
-  font: 0.61rem "Space Mono";
+  font: 0.61rem system-ui;
   color: var(--muted);
   margin-top: 4px;
 }
@@ -1191,7 +1189,7 @@ tbody tr:hover {
   display: grid;
   place-items: center;
   color: var(--petrol);
-  font: 700 0.9rem "Space Mono";
+  font: 700 0.9rem system-ui;
   background: var(--soft-green);
 }
 .supplier-row b {
@@ -1231,7 +1229,7 @@ tbody tr:hover {
 .flow-step {
   padding: 12px 10px;
   position: relative;
-  font: 700 0.61rem "Space Mono";
+  font: 700 0.61rem system-ui;
   color: var(--muted);
   min-height: 62px;
 }

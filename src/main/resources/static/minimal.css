@@ -55,3 +55,10 @@ body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
 .welcome-step, .welcome-steps li { border-radius: 5px; }
 
 [hidden] { display: none !important; }
+
+@media (max-width: 760px) {
+  .sidebar { background: white; border-top: 1px solid var(--line); }
+  .sidebar nav { justify-content: flex-start; overflow-x: auto; gap: 4px; }
+  .sidebar .nav-item { flex: 0 0 112px; font-size: 11px; flex-direction: column; align-items: center; gap: 4px; white-space: normal; text-align: center; padding: 8px 5px; }
+  .main-area { padding-bottom: 100px; }
+}
