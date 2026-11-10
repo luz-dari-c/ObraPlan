@@ -39,11 +39,11 @@ def main() -> None:
     client = build_opener(HTTPCookieProcessor(CookieJar()))
     checks = []
 
-    def call(path: str, payload: dict | None = None, expected: int = 200) -> dict:
+    def call(path: str, payload: dict | None = None, expected: int = 200, method: str | None = None) -> dict:
         request = Request(
             base + path,
             data=None if payload is None else json.dumps(payload).encode(),
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": "application/json"}, method=method,
         )
         try:
             with client.open(request, timeout=15) as response:
@@ -74,6 +74,8 @@ def main() -> None:
             else:
                 raise RuntimeError("Servidor de prueba no inició")
             call("/api/assistant/status", expected=401)
+            call("/api/works/w-demo/agent-lifecycle", expected=401)
+            checks.append("Ciclo persistente requiere sesión")
             checks.append("Estado IA requiere sesión")
             call("/api/works/w-demo/assistant", {"question": "costos"}, 401)
             checks.append("Consulta IA requiere sesión")
@@ -82,6 +84,20 @@ def main() -> None:
             assert not status["configured"] and len(status["agents"]) == 4
             assert status["billingVerified"] is False and "key" not in json.dumps(status).lower()
             checks.append("Estado distingue cuatro roles pendientes sin exponer clave")
+            lifecycle = call("/api/works/w-demo/agent-lifecycle")
+            assert lifecycle["enabled"] is False and lifecycle["memory"]["recuerdos"] == []
+            checks.append("Ciclo inicial sin activación ni memoria ficticia")
+            call("/api/works/w-demo/agent-lifecycle", {"enabled": "sí"}, 400, method="PATCH")
+            checks.append("Configuración exige booleano")
+            call("/api/works/w-demo/agent-lifecycle", {"enabled": True}, method="PATCH")
+            lifecycle = call("/api/works/w-demo/agent-lifecycle")
+            assert len(lifecycle["jobs"]) == 1 and lifecycle["jobs"][0]["status"] == "pendiente"
+            assert call("/api/assistant/status")["callsToday"] == 0
+            call("/api/works/w-demo/agent-lifecycle", {"enabled": False}, method="PATCH")
+            assert call("/api/works/w-demo/agent-lifecycle")["jobs"][0]["status"] == "cancelado"
+            checks.append("Sin clave no llama al modelo y pausar cancela pendiente")
+            call("/api/works/obra-ajena/agent-lifecycle", expected=404)
+            checks.append("Memoria e historial HTTP aislados por obra")
             call("/api/works/w-demo/assistant", {"question": "costos"}, 503)
             checks.append("Sin clave devuelve 503 sin fabricar respuesta IA")
             call("/api/works/obra-ajena/assistant", {"question": "costos"}, 404)

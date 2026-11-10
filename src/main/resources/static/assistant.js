@@ -106,6 +106,7 @@ $("#assistant-form").addEventListener("submit", async (event) => {
     if (request !== assistantRequest || activeWork !== workId()) return;
     assistantRun = result;
     await cargarCicloAgente();
+    if (request !== assistantRequest || activeWork !== workId()) return;
     if (result.ciclo) $('#assistant-progress').textContent = result.ciclo.pasos.join(' → ');
     $("#assistant-answer").textContent = result.answer;
     $("#assistant-usage").textContent = result.cached
