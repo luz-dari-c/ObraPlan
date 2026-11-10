@@ -37,6 +37,11 @@ final class AppService {
         return knowledge.query(workId, "");
     }
 
+    Map<String, Object> recuperarMemoria(Map<String, Object> usuario, String obra) {
+        work(usuario, obra);
+        return new MemoriaAgente(db).recuperarMemoria(usuario.get("id").toString(), obra);
+    }
+
     record Login(String token, Map<String, Object> user) {}
 
     Map<String, Object> saveAnalysis(

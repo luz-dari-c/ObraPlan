@@ -110,3 +110,11 @@ Se simplificó la interfaz con tipografía de sistema, superficies claras, menos
 Se crearon recursos gratuitos propios de ObraPlan en Render y Neon. El mismo servicio sirve interfaz/API; se evitó dividir dominios y sesiones sin necesidad. Migración comprobada sin cambiar el archivo local; respaldo PostgreSQL restaurado en base aislada. La cuenta histórica demo contenía obras de uso real: se revocó su contraseña conocida solo en nube y se conservó una credencial privada para el usuario. No se publicaron datos o secretos en GitHub. OPERACION.md documenta acceso, cuotas, arranque en frío, respaldos y límites.
 
 Git pidió seleccionar identidad; el push con credential.username=luz-dari-c funcionó sin cambiar permisos. El conector GitHub rechazó escritura (403) y no se utilizó para el commit. Render desplegó el código desde main. Pruebas y límites reales en VERIFICACION.md.
+
+## 9 de noviembre de 2026 — Ciclo persistente sin mensajería externa
+
+Se implementó el ciclo explícito disparador → recuperar memoria → construir contexto → llamar API/modelo → guardar memoria. SolicitudModelo separa mensajes/configuración; GeminiClient.llamarApi muestra modelo en URL y envío HTTP real. MemoriaAgente recupera tres recuerdos autorizados y conserva resúmenes de resultados completos, separados de la publicación confirmada en el grafo.
+
+Seguimiento optativo por obra: eventos de inicio, material y cotización se encolan en la misma transacción del cambio. Se agrupan pendientes, hay reserva exclusiva entre workers y tope durable de tres eventos por obra/día. No se reintentan ejecuciones inciertas automáticamente. El trabajador corre dentro del servicio Java, sin RabbitMQ; Render dormido no ejecuta trabajo y retoma pendientes al despertar. La interfaz muestra activación, memoria y estados. Guion y mapa en GUIA_CICLO_AGENTE.md.
+
+Regresión local y ciclo con modelo simulado comprobados en JSON y PostgreSQL aislados. Evidencia y validación real del proveedor se distinguen en VERIFICACION.md. La base del usuario conserva su huella previa.

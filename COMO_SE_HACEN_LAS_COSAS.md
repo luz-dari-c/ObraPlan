@@ -143,3 +143,13 @@ Edita código, requisitos y catálogo de conceptos. Luego regenera las notas doc
 - `static/minimal.css`: sistema visual simplificado. La guía aparece recogida en obras con materiales; sigue abierta para principiantes.
 - `Dockerfile`, `render.yaml`, `scripts/dependencies.ps1`: despliegue y controlador JDBC verificado.
 - `docs/OPERACION.md`: credenciales, respaldo, límites, recuperación y estado de publicación.
+
+## Ciclo persistente del agente
+
+- `AgentePersistente.java`: ejecutar, iniciar trabajador, procesar pendientes y mostrar historial autorizado.
+- `DisparadoresAgente.java`: detectar cambios de materiales/cotizaciones y encolar en la misma transacción; cap diario y agrupación.
+- `MemoriaAgente.java`: recuperarMemoria y guardarMemoria; hasta tres recuerdos de contexto, retención de treinta por obra.
+- `agents/ai/SolicitudModelo.java`: JSON real con contents, systemInstruction, generationConfig y tools. GeminiClient.llamarApi recibe modelo y solicitud y envía HTTP.
+- `static/ciclo-agente.js`: activar/pausar, memoria e historial. Consultar estado no llama a Gemini.
+- `docs/GUIA_CICLO_AGENTE.md`: guion y mapa para señalar cada función.
+- `agentMemory` y `agentJobs`: colecciones durables en PostgreSQL/JSON; nunca exportan sesiones ni contraseñas al contexto.

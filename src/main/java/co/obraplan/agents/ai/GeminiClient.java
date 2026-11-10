@@ -34,6 +34,11 @@ public final class GeminiClient implements ModelClient {
     }
 
     public Map<String, Object> generate(Map<String, Object> request) {
+        return llamarApi(model, request);
+    }
+
+    /** Modelo va en la URL; mensajes y configuración en el cuerpo JSON de Gemini REST. */
+    private Map<String, Object> llamarApi(String modelo, Map<String, Object> solicitud) {
         if (!configured()) {
             throw new HttpError(
                     503, "Configura Gemini con scripts/configure_ai.ps1 y reinicia ObraPlan.");
@@ -43,12 +48,12 @@ public final class GeminiClient implements ModelClient {
                     HttpRequest.newBuilder(
                                     URI.create(
                                             "https://generativelanguage.googleapis.com/v1beta/models/"
-                                                    + model
+                                                    + modelo
                                                     + ":generateContent"))
                             .timeout(Duration.ofSeconds(25))
                             .header("Content-Type", "application/json")
                             .header("x-goog-api-key", key)
-                            .POST(HttpRequest.BodyPublishers.ofString(Json.stringify(request)))
+                            .POST(HttpRequest.BodyPublishers.ofString(Json.stringify(solicitud)))
                             .build();
             HttpResponse<String> result = http.send(call, HttpResponse.BodyHandlers.ofString());
             switch (result.statusCode()) {
@@ -58,17 +63,17 @@ public final class GeminiClient implements ModelClient {
                     throw new HttpError(
                             429,
                             "Gemini agotó su cuota o límite temporal. No se reintentó ni se cambió"
-                                + " a un servicio de pago.");
+                                    + " a un servicio de pago.");
                 case 400, 404:
                     throw new HttpError(
                             502,
                             "Gemini rechazó el modelo o la solicitud. Revisa el modelo disponible"
-                                + " en AI Studio.");
+                                    + " en AI Studio.");
                 case 401, 403:
                     throw new HttpError(
                             503,
                             "Gemini rechazó la clave o sus permisos. Revisa la configuración"
-                                + " local.");
+                                    + " local.");
                 default:
                     throw new HttpError(
                             502, "Gemini no está disponible. Tus registros permanecen guardados.");

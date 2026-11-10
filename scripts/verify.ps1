@@ -10,6 +10,8 @@ if ($LASTEXITCODE -ne 0) { throw 'No se pudieron compilar las verificaciones.' }
 if ($LASTEXITCODE -ne 0) { throw 'Falló la verificación Java.' }
 & java --add-modules jdk.httpserver -cp build/test-classes co.obraplan.AgentVerification $projectRoot
 if ($LASTEXITCODE -ne 0) { throw 'Falló la verificación de agentes IA.' }
+& java --add-modules jdk.httpserver -cp build/test-classes co.obraplan.CicloAgenteVerification $projectRoot
+if ($LASTEXITCODE -ne 0) { throw 'Falló el ciclo persistente.' }
 $settings = Get-Content -Raw 'config/integrations.json' | ConvertFrom-Json
 $projectPython = if (Test-Path -LiteralPath $settings.python) { $settings.python } else { 'python' }
 & $projectPython scripts/verify_knowledge.py

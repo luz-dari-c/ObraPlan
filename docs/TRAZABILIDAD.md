@@ -50,3 +50,11 @@ Esta matriz relaciona necesidades, requisitos, componentes y evidencia observabl
 | Consultar referencias comerciales | RF-20 | CatalogoPublico, catalogo.js | Dos tiendas, fuente/fecha/moneda; USD no se prepara como COP; usuario confirma material/proveedor |
 | Conservar trabajo al desplegar | RF-21, RNF-05 | AlmacenPostgres, Autenticacion, MigrarDatos | SQL real: rollback, concurrencia, sesión tras reinicio y revocación; migración a destino vacío y respaldo restaurado |
 | Comprender y recorrer el producto | RF-19, RNF-07 | minimal.css, welcome.js | Guía recogida con registros, abierta sin materiales; navegación de catálogo y acceso HTTPS |
+
+## Ciclo persistente y observable
+
+| Necesidad | Requisito | Archivos | Evidencia |
+|---|---|---|---|
+| Continuidad entre análisis | RF-22 | MemoriaAgente, WorkAgentTools, AgentTeam | Primer análisis guarda resumen; siguiente petición incluye memoria; se recupera tras reiniciar y se filtra por propietario |
+| Activación por cambios | RF-23 | DisparadoresAgente, Database, AgentePersistente | Activar y guardar material produce evento sin pulsar Consultar; reinicio conserva pendiente y completado no se repite |
+| Explicar el agente y controlar su coste | RNF-13 | SolicitudModelo, GeminiClient, ciclo-agente.js | Modelo en URL, contents y generationConfig reales; historial visible y tope de tres eventos diarios |

@@ -34,8 +34,8 @@ def main() -> None:
         ),
     )
     check(
-        "33 requisitos documentales",
-        sum(node["type"] == "requisito" for node in graph["nodes"]) == 33,
+        "36 requisitos documentales",
+        sum(node["type"] == "requisito" for node in graph["nodes"]) == 36,
     )
     response = agent.consult("costo sin cotización", None, False)
     check(

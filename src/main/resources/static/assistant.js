@@ -53,6 +53,7 @@ async function renderAssistantStatus() {
     $("#assistant-setup").open = !status.configured;
     assistantConfigured = status.configured;
     updateAssistantButton();
+    await cargarCicloAgente();
     const rules = state.data?.analysis.agents || [];
     $("#knowledge-agents").innerHTML = [...status.agents, ...rules]
       .map(
@@ -104,6 +105,8 @@ $("#assistant-form").addEventListener("submit", async (event) => {
     );
     if (request !== assistantRequest || activeWork !== workId()) return;
     assistantRun = result;
+    await cargarCicloAgente();
+    if (result.ciclo) $('#assistant-progress').textContent = result.ciclo.pasos.join(' → ');
     $("#assistant-answer").textContent = result.answer;
     $("#assistant-usage").textContent = result.cached
       ? "Resultado reutilizado: esta consulta no hizo llamadas nuevas al modelo."
@@ -142,7 +145,7 @@ $("#assistant-form").addEventListener("submit", async (event) => {
     $("#assistant-save").disabled = !result.complete;
     $("#assistant-result").classList.remove("hidden");
     $("#assistant-progress").textContent = result.complete
-      ? "Análisis disponible."
+      ? `Análisis disponible. ${result.ciclo ? result.ciclo.pasos.join(" → ") + ". Memorias recuperadas: " + result.ciclo.memoriasRecuperadas : ""}`
       : result.stopReason === "output"
         ? "El modelo no terminó de redactar la respuesta. Los informes parciales siguen disponibles."
         : result.stopReason === "context_changed"

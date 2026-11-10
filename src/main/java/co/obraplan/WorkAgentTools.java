@@ -12,12 +12,18 @@ final class WorkAgentTools implements AgentTools {
     private final AppService service;
     private final Map<String, Object> user;
     private final String workId;
+    private final Map<String, Object> memoria;
 
     WorkAgentTools(AppService service, Map<String, Object> user, String workId) {
         this.service = service;
         this.user = user;
         this.workId = workId;
         service.dashboard(user, workId);
+        this.memoria = service.recuperarMemoria(user, workId);
+    }
+
+    public Map<String, Object> recuperarMemoria() {
+        return memoria;
     }
 
     public String revision(String question) {

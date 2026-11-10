@@ -77,7 +77,14 @@ final class Database {
     @SuppressWarnings("unchecked")
     <T> T write(java.util.function.Function<Map<String, Object>, T> action) {
         if (almacen != null) {
-            T resultado = almacen.modificar(action);
+            T resultado =
+                    almacen.modificar(
+                            actual -> {
+                                var anterior = Json.object(deep(actual));
+                                T salida = action.apply(actual);
+                                DisparadoresAgente.detectarCambios(anterior, actual);
+                                return salida;
+                            });
             notificar(almacen.leer());
             return resultado;
         }
@@ -86,6 +93,7 @@ final class Database {
         try {
             state = Json.object(deep(previous));
             T out = action.apply(state);
+            DisparadoresAgente.detectarCambios(previous, state);
             persist();
             notificar(Json.object(deep(state)));
             return out;

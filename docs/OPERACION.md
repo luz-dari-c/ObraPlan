@@ -45,3 +45,9 @@ La moneda declarada se muestra sin corregirla por intuición. Ferresmart devolvi
 `scripts/verify.ps1` ejecuta regresión con bases/vaults temporales. `PersistenciaVerification` exige una base PostgreSQL de pruebas vacía: no usarla en producción. `scripts/dependencies.ps1` descarga el controlador fijado y comprueba SHA-256. El contenedor lo verifica igualmente y ejecuta la aplicación sin usuario root.
 
 El plan, las decisiones y sus límites están en PLAN_EVOLUCION.md. Las siguientes ampliaciones de escala deberán contemplar consultas por entidad, un pool de conexiones, un esquema relacional normalizado, auditoría de seguridad, monitorización y pruebas de carga antes de prometer capacidad de producción.
+
+## Seguimiento por eventos y memoria
+
+Cada obra puede activar el seguimiento IA desde Agentes y conocimiento. Ese consentimiento encola inicio_seguimiento; cambios posteriores en materiales/cotizaciones generan eventos en la misma transacción del guardado. agentJobs conserva pendiente, reserva, resultado o error. Hay un único trabajo reservado entre instancias y un límite durable de tres eventos por obra/día. Cambios próximos se agrupan durante una espera mínima de veinte segundos. Una interrupción incierta se marca cuando vence su reserva de cuatro minutos y no se repite automáticamente. Pausar cancela pendientes, no interrumpe una llamada ya iniciada.
+
+agentMemory conserva hasta treinta resúmenes por obra; cada contexto recupera los últimos tres del propietario. Solo se guarda resultado completo, deduplicado por runId. Esa memoria es antecedente, no regla ni aprobación de compra. La publicación en el grafo sigue requiriendo confirmación. El historial no exige RabbitMQ ni un servicio adicional. Render Free duerme: mientras esté dormido no hay ejecución; al despertar se recuperan pendientes.

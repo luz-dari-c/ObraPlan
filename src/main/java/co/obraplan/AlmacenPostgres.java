@@ -19,7 +19,9 @@ final class AlmacenPostgres implements AlmacenEstado {
                     "quotes",
                     "activities",
                     "sessions",
-                    "analyses");
+                    "analyses",
+                    "agentMemory",
+                    "agentJobs");
     private final String url;
     private final Properties propiedades = new Properties();
 
@@ -55,13 +57,13 @@ final class AlmacenPostgres implements AlmacenEstado {
                         + " text NOT NULL, documento jsonb NOT NULL, PRIMARY KEY (coleccion,id))");
             sql.execute(
                     "CREATE INDEX IF NOT EXISTS obraplan_por_obra ON obraplan_registros"
-                        + " ((documento->>'workId'))");
+                            + " ((documento->>'workId'))");
             sql.execute(
                     "CREATE UNIQUE INDEX IF NOT EXISTS obraplan_correo_unico ON obraplan_registros"
-                        + " ((lower(documento->>'email'))) WHERE coleccion='users'");
+                            + " ((lower(documento->>'email'))) WHERE coleccion='users'");
             sql.execute(
                     "CREATE INDEX IF NOT EXISTS obraplan_por_propietario ON obraplan_registros"
-                        + " ((documento->>'ownerId'))");
+                            + " ((documento->>'ownerId'))");
         } catch (SQLException error) {
             throw fallo(error);
         }
@@ -78,7 +80,7 @@ final class AlmacenPostgres implements AlmacenEstado {
                 ResultSet filas =
                         sql.executeQuery(
                                 "SELECT coleccion, documento::text FROM obraplan_registros ORDER BY"
-                                    + " coleccion,id")) {
+                                        + " coleccion,id")) {
             while (filas.next()) {
                 @SuppressWarnings("unchecked")
                 List<Object> lista = (List<Object>) estado.get(filas.getString(1));

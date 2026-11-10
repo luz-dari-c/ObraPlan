@@ -20,6 +20,7 @@ Código fuente: [luz-dari-c/ObraPlan](https://github.com/luz-dari-c/ObraPlan).
 - Revisar subtotal conocido, precios faltantes y alertas de fechas.
 - Seguir una guía para principiantes con ocho secciones y lectura por voz local.
 - Consultar agentes de IA y ver participantes, herramientas, fuentes y consumo.
+- Activar seguimiento IA por eventos y recuperar recuerdos de análisis anteriores de la misma obra.
 - Conservar propuestas completas en un grafo conectado con Obsidian.
 
 No realiza compras, pagos ni contactos automáticos. El usuario confirma precios y estados comerciales; los catálogos son referencias observadas. Las cantidades de demostración no constituyen un cálculo estructural.
@@ -159,3 +160,9 @@ La migración no reemplaza destinos con datos ni modifica el archivo de origen. 
 Los catálogos consultan Store API pública de Ferretería en Galerías y Ferresmart, con caché de cinco minutos y fallos independientes. La moneda se conserva tal como la declara cada tienda; una moneda diferente de COP impide preparar automáticamente la cotización. No se garantiza inventario, entrega, impuestos o equivalencia de presentación.
 
 Consulta [operación y despliegue](docs/OPERACION.md) y [plan y decisiones](docs/PLAN_EVOLUCION.md). El estado real del despliegue y sus pruebas se registran allí. Las claves, base personal y respaldos están excluidos de Git.
+
+## Demostrar el ciclo del agente
+
+[Guía de explicación y demostración](docs/GUIA_CICLO_AGENTE.md): disparador → recuperar memoria → contexto y herramientas → llamada real a Gemini → guardar memoria. `SolicitudModelo.crearSolicitudModelo` construye mensajes/configuración; `GeminiClient.llamarApi` envía la solicitud HTTP con el modelo en la URL. Se usa REST, sin simular un SDK.
+
+En Agentes y conocimiento, activa el seguimiento de una obra para registrar eventos automáticos. El historial y la memoria son durables en PostgreSQL. Se agrupan cambios y se permiten hasta tres eventos por obra/día. El trabajador se ejecuta mientras Render está despierto; no utiliza RabbitMQ. Las consultas manuales también recuperan y guardan recuerdos. Conservar una propuesta en el grafo sigue siendo una decisión explícita del usuario.

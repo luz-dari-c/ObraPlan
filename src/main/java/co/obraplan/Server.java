@@ -19,10 +19,12 @@ public final class Server {
     private final Path staticDir;
     private final LimiteSolicitudes limites = new LimiteSolicitudes();
     private final CatalogoPublico catalogo = new CatalogoPublico();
+    private final AgentePersistente agente;
     private final AgentTeam team = new AgentTeam(new GeminiClient());
 
-    private Server(AppService service, Path staticDir) {
+    private Server(AppService service, Database datos, Path staticDir) {
         this.service = service;
+        this.agente = new AgentePersistente(datos, service, team);
         this.staticDir = staticDir;
     }
 
@@ -46,7 +48,9 @@ public final class Server {
         String vaultPath = System.getenv().getOrDefault("OBRAPLAN_VAULT", "");
         KnowledgeAgent knowledge =
                 new KnowledgeAgent(root, vaultPath.isBlank() ? null : Path.of(vaultPath));
-        Server app = new Server(new AppService(Configuracion.base(data), knowledge), stat);
+        Database datos = Configuracion.base(data);
+        Server app = new Server(new AppService(datos, knowledge), datos, stat);
+        app.agente.iniciar();
         server.createContext("/", app::handle);
         server.setExecutor(
                 Executors.newFixedThreadPool(
@@ -60,7 +64,13 @@ public final class Server {
                                 ? data.toAbsolutePath().toString()
                                 : "PostgreSQL")
                         + ")");
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> server.stop(0)));
+        Runtime.getRuntime()
+                .addShutdownHook(
+                        new Thread(
+                                () -> {
+                                    app.agente.close();
+                                    server.stop(0);
+                                }));
     }
 
     private void handle(HttpExchange x) throws IOException {
@@ -192,9 +202,19 @@ public final class Server {
                 sendJson(x, 200, catalogo.buscar(consulta));
                 return;
             }
+            if (a.length == 3 && a[2].equals("agent-lifecycle")) {
+                if (method.equals("PATCH")) {
+                    if (!(b.get("enabled") instanceof Boolean))
+                        throw new HttpError(400, "enabled debe ser verdadero o falso.");
+                    agente.configurar(user, wid, Boolean.TRUE.equals(b.get("enabled")));
+                } else if (!method.equals("GET")) throw new HttpError(405, "Método no permitido.");
+                sendJson(x, 200, agente.estado(user, wid));
+                return;
+            }
             if (a.length == 3 && a[2].equals("assistant") && method.equals("POST")) {
                 var tools = new WorkAgentTools(service, user, wid);
-                sendJson(x, 200, team.ask(str(user, "id"), wid, str(b, "question"), tools));
+                sendJson(
+                        x, 200, agente.ejecutar(user, wid, str(b, "question"), "consulta_usuario"));
                 return;
             }
             if (a.length == 4

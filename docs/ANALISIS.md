@@ -37,6 +37,9 @@ Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3
 | RF-20 | Consultar catálogos públicos por obra. | Búsqueda autenticada muestra productos, moneda declarada, fuente y fecha. Fallos por proveedor se explican; moneda distinta de COP o precio por rango impide preparación automática. El usuario confirma unidad, material y proveedor antes de guardar cotización. |
 | RF-21 | Usar persistencia PostgreSQL y sesiones durables. | Producción rechaza arranque sin DATABASE_URL. Reinicio conserva registros y sesiones vigentes; escrituras inválidas revierten; escrituras concurrentes no pierden cambios; cierre revoca sesión en otras instancias. Migración solo admite destino vacío. |
 
+| RF-22 | Recuperar y guardar memoria episódica del agente. | Cada consulta recupera hasta tres recuerdos del propietario y obra y los incluye en contents como antecedentes. Solo resultados completos generan recuerdos deduplicados por runId. Persisten tras reiniciar y no modifican adquisiciones ni publican propuestas en el grafo sin confirmación. |
+| RF-23 | Activar agentes mediante eventos durables. | Seguimiento optativo por obra: activar, guardar materiales o cambiar cotizaciones genera un evento transaccional. Se agrupan pendientes, se procesan con reserva exclusiva y se muestran disparador, estado y resultado. Pendientes se recuperan tras reinicio; interrumpidos no se reintentan automáticamente. |
+
 ## Requisitos no funcionales y comprobación
 
 | ID | Calidad requerida | Criterio observable |
@@ -53,6 +56,8 @@ Quedan fuera interpretación de planos, cantidades estructurales automáticas, 3
 | RNF-10 | Conservación de conocimiento editable. | Namespace propio y Aprendizajes separado; repetir sincronización no duplica índice ni sobrescribe aprendizajes. |
 | RNF-11 | Acotar consumo y detener errores del proveedor. | Hasta 10 llamadas por análisis, una ejecución simultánea, caché sensible a cambios, límite diario por proceso y ningún reintento automático ante cuota agotada. Google conserva sus propias cuotas. |
 | RNF-12 | Proteger credenciales y datos en integración cloud. | Clave en variable del servidor o archivo protegido por Windows fuera de Git; proyecciones sin usuarios/hashes/sesiones/contactos. La cuenta Google debe permanecer sin facturación para evitar cobros. |
+
+| RNF-13 | Controlar consumo y observar el ciclo persistente. | Máximo tres eventos automáticos por obra/día, contexto histórico acotado, sin llamadas al modelo por consultar estado, cancelación de pendientes al pausar y explicación visible de modelo, mensajes, configuración y memoria. Render dormido no implica trabajo en ejecución. |
 
 Son criterios de esta entrega académica. No se han inventado métricas de rendimiento ni validaciones de usuarios.
 

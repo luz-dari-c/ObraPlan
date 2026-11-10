@@ -524,6 +524,15 @@
               </button>
             </div>
             <div id="knowledge-status" class="notice" role="status"></div>
+            <section class="section knowledge-query">
+              <h2>El ciclo de tu agente</h2>
+              <p>Disparador → recuperar memoria → contexto y herramientas → modelo → guardar memoria.</p>
+              <label><input id="ciclo-activar" type="checkbox" /> Activar seguimiento IA de esta obra</label>
+              <p id="ciclo-aviso" class="minor" role="status"></p>
+              <details><summary>Cómo se construye la llamada</summary><p>Modelo: GeminiClient.model. Mensajes: contents. Configuración: generationConfig. SolicitudModelo.crearSolicitudModelo construye el JSON y GeminiClient.llamarApi lo envía al servidor de Gemini. La memoria se recupera antes y se guarda después.</p></details>
+              <details><summary>Memoria recuperable de esta obra</summary><div id="ciclo-memoria" class="knowledge-sources"></div></details>
+              <details open><summary>Historial de disparadores y resultados</summary><div id="ciclo-ejecuciones" class="knowledge-sources"></div></details>
+            </section>
             <section class="section assistant-panel">
               <span class="eyebrow">ASISTENTE DE ADQUISICIONES</span>
               <h2>Analiza tu obra con agentes de IA</h2>
@@ -699,5 +708,6 @@
     <script src="/assets/knowledge.js" defer></script>
     <script src="/assets/assistant.js" defer></script>
     <script src="/assets/catalogo.js" defer></script>
+    <script src="/assets/ciclo-agente.js" defer></script>
   </body>
 </html>
